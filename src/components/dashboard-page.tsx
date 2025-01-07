@@ -1,20 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { SalaryInput } from './components/salary-input'
-import { Dashboard } from './components/dashboard'
-import { ExpenseForm } from './components/expense-form'
-import { ExpenseTable } from './components/expensive-table/expense-table'
-import { SalaryDistribution } from './types/finance'
+import { SalaryInput } from './salary-input'
+import { Dashboard } from './dashboard'
+import { ExpenseForm } from './expense-form'
+import { ExpenseTable } from './expensive-table/expense-table'
+import { SalaryDistribution } from '../types/finance'
 import {
   calculateDistribution,
   calculateCategoryBudgets,
   calculateWeeklyTrends,
   calculateComparisonData,
   calculateBalanceProjection,
-} from './utils/calculations'
+} from '../utils/calculations'
 import { Toaster } from '@/components/ui/sonner'
-import { Button } from './components/ui/button'
+import { Button } from './ui/button'
 import { PlusCircle } from 'lucide-react'
 import {
   Dialog,
@@ -23,12 +23,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './components/ui/dialog'
-import { cn } from './lib/utils'
-import { MonthSelector } from './components/month-selector'
+} from './ui/dialog'
+import { cn } from '../lib/utils'
+import { MonthSelector } from './month-selector'
 import dayjs from 'dayjs'
-import { useExpenses } from './hooks/use-expenses'
-import { getSalary, saveSalary } from './services/storage'
+import { useExpenses } from '../hooks/use-expenses'
+import { getSalary, saveSalary } from '../services/storage'
 
 export function DashboardPage() {
   const [salary, setSalary] = useState<number>(0)
@@ -93,7 +93,7 @@ export function DashboardPage() {
     : []
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div
           className={cn('flex justify-between', {

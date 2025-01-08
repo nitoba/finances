@@ -106,7 +106,7 @@ export function DashboardRootPage() {
     <div className="min-h-screen py-8 px-4">
       <>
         <div
-          className={cn('flex justify-between', {
+          className={cn('flex flex-col sm:flex-row justify-between', {
             'justify-center': !distribution,
           })}
         >

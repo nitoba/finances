@@ -30,7 +30,7 @@ import dayjs from 'dayjs'
 import { useExpenses } from '../hooks/use-expenses'
 import { getSalary, saveSalary } from '../services/storage'
 
-export function DashboardPage() {
+export function DashboardRootPage() {
   const [salary, setSalary] = useState<number>(0)
   const [distribution, setDistribution] = useState<SalaryDistribution | null>(
     null,
@@ -93,8 +93,8 @@ export function DashboardPage() {
     : []
 
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen py-8 px-4">
+      <>
         <div
           className={cn('flex justify-between', {
             'justify-center': !distribution,
@@ -153,7 +153,7 @@ export function DashboardPage() {
             <ExpenseTable />
           </div>
         )}
-      </div>
+      </>
       <Toaster richColors />
     </div>
   )

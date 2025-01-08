@@ -29,16 +29,20 @@ import dayjs from 'dayjs'
 import { useExpenses } from '../hooks/use-expenses'
 import { Skeleton } from './ui/skeleton'
 import { toast } from 'sonner'
-import { useServerAction } from 'zsa-react'
 import { getSalaryAction } from '@/services/actions/user.action'
+import { useServerActionQuery } from '@/hooks/server-action-hooks'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function DashboardRootPage() {
+  const queryClient = useQueryClient()
   const { data: expenses } = useExpenses()
-  const {
-    data: salary,
-    execute: getSalary,
-    isPending: isGettingSalary,
-  } = useServerAction(getSalaryAction)
+  const { data: salary, isLoading: isGettingSalary } = useServerActionQuery(
+    getSalaryAction,
+    {
+      queryKey: ['salary'],
+      input: undefined,
+    },
+  )
   const [distribution, setDistribution] = useState<SalaryDistribution | null>(
     null,
   )
@@ -68,16 +72,17 @@ export function DashboardRootPage() {
   }, [expenses])
 
   useEffect(() => {
-    getSalary().then(([result]) => {
-      if (result && result !== 0) {
-        handleCalculate(result)
-      }
-    })
-  }, [])
+    if (salary) {
+      handleCalculate(salary)
+    } else {
+      setDistribution(null)
+    }
+  }, [salary])
 
   const handleCalculate = async (salary: number) => {
     try {
       setDistribution(calculateDistribution(salary))
+      queryClient.setQueryData(['salary'], salary)
     } catch (error) {
       toast.error('Failed to save salary')
     }
@@ -99,8 +104,6 @@ export function DashboardRootPage() {
     distribution && salary
       ? calculateBalanceProjection(salary, filteredExpenses)
       : []
-
-  console.log(salary)
 
   return (
     <div className="min-h-screen py-8 px-4">
@@ -151,7 +154,7 @@ export function DashboardRootPage() {
               <Skeleton className="w-32 h-10 rounded-md ml-auto" />
             </div>
           </div>
-        ) : salary === undefined && !isGettingSalary ? (
+        ) : !salary && !isGettingSalary ? (
           <SalaryInput onCalculate={handleCalculate} />
         ) : null}
 

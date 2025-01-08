@@ -2,13 +2,13 @@
 
 import { Expense } from '@/schemas/expense.schema'
 import { ColumnDef } from '@tanstack/react-table'
-import { format } from 'date-fns'
+import dayjs from 'dayjs'
 
 export const columns: ColumnDef<Expense>[] = [
   {
     accessorKey: 'date',
     header: 'Date',
-    cell: ({ row }) => format(row.getValue('date'), 'dd-MM-yyyy'),
+    cell: ({ row }) => dayjs(row.getValue('date')).format('DD/MM/YYYY'),
   },
   {
     accessorKey: 'description',

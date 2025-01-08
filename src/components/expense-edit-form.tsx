@@ -5,7 +5,6 @@ import { DialogFooter } from './ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { CalendarIcon } from 'lucide-react'
 import { Calendar } from './ui/calendar'
-import { format } from 'date-fns'
 import {
   Select,
   SelectContent,
@@ -15,6 +14,7 @@ import {
 } from './ui/select'
 import { Expense } from '@/schemas/expense.schema'
 import { ExpenseCategory } from '@/schemas/category.schema'
+import dayjs from 'dayjs'
 interface ExpenseEditFormProps {
   expense: Expense
   onSave: (expense: Expense) => void
@@ -78,7 +78,7 @@ export function ExpenseEditForm({
                 className="w-full justify-start text-left font-normal"
               >
                 <CalendarIcon />
-                {format(formData.date, 'dd-MM-yyyy')}
+                {dayjs(formData.date).format('DD/MM/YYYY')}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">

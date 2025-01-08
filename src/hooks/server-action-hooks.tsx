@@ -6,6 +6,7 @@ import {
 
 export const QueryKeyFactory = createServerActionsKeyFactory({
   expenses: () => ['expenses'],
+  salary: () => ['salary'],
 })
 
 const {

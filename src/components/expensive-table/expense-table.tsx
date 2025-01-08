@@ -27,7 +27,7 @@ import {
   useUpdateExpense,
   useDeleteExpense,
 } from '@/hooks/use-expenses'
-import { Expense } from '@/types/finance'
+import { Expense } from '@/schemas/expense.schema'
 
 export function ExpenseTable() {
   const { data: expenses = [], isLoading, error } = useExpenses()
@@ -61,14 +61,17 @@ export function ExpenseTable() {
 
   const handleConfirmDelete = () => {
     if (selectedExpense) {
-      deleteExpenseMutation.mutate(selectedExpense.id, {
-        onSuccess: () => {
-          setIsDeleteDialogOpen(false)
-          toast('Expense deleted', {
-            description: 'The expense has been successfully deleted.',
-          })
+      deleteExpenseMutation.mutate(
+        { id: selectedExpense.id },
+        {
+          onSuccess: () => {
+            setIsDeleteDialogOpen(false)
+            toast('Expense deleted', {
+              description: 'The expense has been successfully deleted.',
+            })
+          },
         },
-      })
+      )
     }
   }
 

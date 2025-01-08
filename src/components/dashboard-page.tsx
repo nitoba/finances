@@ -13,7 +13,6 @@ import {
   calculateComparisonData,
   calculateBalanceProjection,
 } from '../utils/calculations'
-import { Toaster } from '@/components/ui/sonner'
 import { Button } from './ui/button'
 import { PlusCircle } from 'lucide-react'
 import {
@@ -28,15 +27,21 @@ import { cn } from '../lib/utils'
 import { MonthSelector } from './month-selector'
 import dayjs from 'dayjs'
 import { useExpenses } from '../hooks/use-expenses'
-import { getSalary, saveSalary } from '../services/storage'
+import { Skeleton } from './ui/skeleton'
+import { toast } from 'sonner'
+import { useServerAction } from 'zsa-react'
+import { getSalaryAction } from '@/services/actions/user.action'
 
 export function DashboardRootPage() {
-  const [salary, setSalary] = useState<number>(0)
+  const { data: expenses } = useExpenses()
+  const {
+    data: salary,
+    execute: getSalary,
+    isPending: isGettingSalary,
+  } = useServerAction(getSalaryAction)
   const [distribution, setDistribution] = useState<SalaryDistribution | null>(
     null,
   )
-
-  const { data: expenses } = useExpenses()
 
   const [selectedMonth, setSelectedMonth] = useState<string>(
     new Date().toISOString().slice(0, 7),
@@ -63,17 +68,19 @@ export function DashboardRootPage() {
   }, [expenses])
 
   useEffect(() => {
-    getSalary().then((res) => {
-      if (res !== 0) {
-        setSalary(res)
-        handleCalculate(res)
+    getSalary().then(([result]) => {
+      if (result && result !== 0) {
+        handleCalculate(result)
       }
     })
   }, [])
 
-  const handleCalculate = (salary: number) => {
-    setDistribution(calculateDistribution(salary))
-    saveSalary(+salary)
+  const handleCalculate = async (salary: number) => {
+    try {
+      setDistribution(calculateDistribution(salary))
+    } catch (error) {
+      toast.error('Failed to save salary')
+    }
   }
 
   const filteredExpenses =
@@ -88,9 +95,12 @@ export function DashboardRootPage() {
         calculateCategoryBudgets(distribution, filteredExpenses),
       )
     : []
-  const balanceData = distribution
-    ? calculateBalanceProjection(salary, filteredExpenses)
-    : []
+  const balanceData =
+    distribution && salary
+      ? calculateBalanceProjection(salary, filteredExpenses)
+      : []
+
+  console.log(salary)
 
   return (
     <div className="min-h-screen py-8 px-4">
@@ -132,9 +142,18 @@ export function DashboardRootPage() {
           )}
         </div>
 
-        {!distribution && !salary && (
+        {salary === undefined || isGettingSalary ? (
+          <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
+            <Skeleton className="w-full h-12 rounded-lg" />
+            <Skeleton className="w-3/4 h-4 rounded-md" />
+            <div className="w-full space-y-4 mt-4">
+              <Skeleton className="w-full h-14 rounded-lg" />
+              <Skeleton className="w-32 h-10 rounded-md ml-auto" />
+            </div>
+          </div>
+        ) : salary === undefined && !isGettingSalary ? (
           <SalaryInput onCalculate={handleCalculate} />
-        )}
+        ) : null}
 
         {distribution && (
           <div className="space-y-8 mt-8">
@@ -154,7 +173,6 @@ export function DashboardRootPage() {
           </div>
         )}
       </>
-      <Toaster richColors />
     </div>
   )
 }

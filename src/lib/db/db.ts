@@ -1,8 +1,12 @@
-import { drizzle } from 'drizzle-orm/libsql/node'
+import { drizzle } from 'drizzle-orm/libsql'
 
-export const db = drizzle({
-  connection: {
-    // url file path
-    url: 'file:./db.sqlite',
-  },
+import { createClient } from '@libsql/client'
+
+import * as schema from './schemas'
+
+const client = createClient({
+  url: process.env.DATABASE_URL!,
+  authToken: process.env.DATABASE_AUTH_TOKEN,
 })
+
+export const db = drizzle(client, { schema })

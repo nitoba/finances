@@ -1,20 +1,27 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import {
-  getExpenses,
-  createExpense,
-  updateExpense,
-  deleteExpense,
-} from '../services/storage'
+import { useQueryClient } from '@tanstack/react-query'
+
 import { toast } from 'sonner'
+import {
+  useServerActionMutation,
+  useServerActionQuery,
+} from './server-action-hooks'
+import {
+  createNewExpenseAction,
+  deleteExpenseAction,
+  getExpensesFromUserAction,
+  updateExpenseAction,
+} from '@/services/actions/expenses.action'
 
 export const useExpenses = () => {
-  return useQuery({ queryKey: ['expenses'], queryFn: getExpenses })
+  return useServerActionQuery(getExpensesFromUserAction, {
+    queryKey: ['expenses'],
+    input: undefined,
+  })
 }
 
 export const useCreateExpense = () => {
   const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: createExpense,
+  return useServerActionMutation(createNewExpenseAction, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
       toast.success('Despesa criada com sucesso')
@@ -28,8 +35,7 @@ export const useCreateExpense = () => {
 
 export const useUpdateExpense = () => {
   const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: updateExpense,
+  return useServerActionMutation(updateExpenseAction, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
       toast.success('Despesa atualizada com sucesso')
@@ -43,8 +49,7 @@ export const useUpdateExpense = () => {
 
 export const useDeleteExpense = () => {
   const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: deleteExpense,
+  return useServerActionMutation(deleteExpenseAction, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
       toast.success('Despesa excluída com sucesso')

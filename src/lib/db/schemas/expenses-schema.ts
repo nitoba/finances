@@ -1,5 +1,6 @@
 import { sqliteTable, text, real } from 'drizzle-orm/sqlite-core'
 import { ExpenseCategory } from '@/types/finance'
+import { users } from './auth-schema'
 
 export const expenses = sqliteTable('expenses', {
   id: text('id').primaryKey(),
@@ -7,6 +8,9 @@ export const expenses = sqliteTable('expenses', {
   description: text('description').notNull(),
   amount: real('amount').notNull(),
   category: text('category').$type<ExpenseCategory>().notNull(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id),
 })
 
 // export const categoryBudget = sqliteTable('category_budgets', {

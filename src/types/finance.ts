@@ -1,16 +1,4 @@
-export type ExpenseCategory =
-  | 'essentials'
-  | 'leisure'
-  | 'investments'
-  | 'knowledge'
-  | 'emergency'
-export interface Expense {
-  id: string
-  date: string
-  description: string
-  amount: number
-  category: ExpenseCategory
-}
+import { ExpenseCategory } from '@/schemas/category.schema'
 
 export interface CategoryBudget {
   category: ExpenseCategory

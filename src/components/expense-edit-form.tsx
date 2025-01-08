@@ -1,12 +1,10 @@
 import React from 'react'
-import { Expense, ExpenseCategory } from '../types/finance'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { DialogFooter } from './ui/dialog'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { CalendarIcon } from 'lucide-react'
 import { Calendar } from './ui/calendar'
-import dayjs from 'dayjs'
 import { format } from 'date-fns'
 import {
   Select,
@@ -15,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select'
+import { Expense } from '@/schemas/expense.schema'
+import { ExpenseCategory } from '@/schemas/category.schema'
 interface ExpenseEditFormProps {
   expense: Expense
   onSave: (expense: Expense) => void
@@ -63,8 +63,6 @@ export function ExpenseEditForm({
       }))
     }
   }
-
-  console.log(dayjs(expense.date))
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

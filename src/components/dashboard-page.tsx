@@ -142,7 +142,7 @@ export function DashboardRootPage() {
           )}
         </div>
 
-        {salary === undefined || isGettingSalary ? (
+        {isGettingSalary ? (
           <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
             <Skeleton className="w-full h-12 rounded-lg" />
             <Skeleton className="w-3/4 h-4 rounded-md" />

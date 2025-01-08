@@ -15,7 +15,7 @@ export default function AuthPage() {
   const [isSignIn, setIsSignIn] = useState(true)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-5">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>{isSignIn ? 'Sign In' : 'Sign Up'}</CardTitle>

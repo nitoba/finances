@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { CalendarIcon, PlusCircle } from 'lucide-react'
-import { ExpenseCategory } from '../types/finance'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Button } from './ui/button'
 import { Calendar } from './ui/calendar'
@@ -14,6 +13,7 @@ import {
   SelectValue,
 } from './ui/select'
 import { useCreateExpense } from '@/hooks/use-expenses'
+import { ExpenseCategory } from '@/schemas/category.schema'
 
 interface ExpenseFormProps {
   onAddExpense: () => void

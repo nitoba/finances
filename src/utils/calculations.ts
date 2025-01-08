@@ -1,9 +1,6 @@
-import {
-  CategoryBudget,
-  Expense,
-  ExpenseCategory,
-  SalaryDistribution,
-} from '../types/finance'
+import { Expense } from '@/schemas/expense.schema'
+import { CategoryBudget, SalaryDistribution } from '../types/finance'
+import { ExpenseCategory } from '@/schemas/category.schema'
 
 export const calculateDistribution = (salary: number): SalaryDistribution => {
   const essentialsTotal = salary * 0.7

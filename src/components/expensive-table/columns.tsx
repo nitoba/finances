@@ -1,7 +1,7 @@
 'use client'
 
+import { Expense } from '@/schemas/expense.schema'
 import { ColumnDef } from '@tanstack/react-table'
-import { Expense } from '@/types/finance'
 import { format } from 'date-fns'
 
 export const columns: ColumnDef<Expense>[] = [

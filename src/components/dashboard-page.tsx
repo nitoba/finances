@@ -32,19 +32,21 @@ import { toast } from 'sonner'
 import { getSalaryAction } from '@/services/actions/user.action'
 import { useServerActionQuery } from '@/hooks/server-action-hooks'
 import { useQueryClient } from '@tanstack/react-query'
+import { LoadingDashboard } from './loading-dashboard'
 
 export function DashboardRootPage() {
   const queryClient = useQueryClient()
-  const { data: expenses } = useExpenses()
+  const { data: expenses, isLoading: isGettingExpenses } = useExpenses()
+  const [distribution, setDistribution] = useState<SalaryDistribution | null>(
+    null,
+  )
+
   const { data: salary, isLoading: isGettingSalary } = useServerActionQuery(
     getSalaryAction,
     {
       queryKey: ['salary'],
       input: undefined,
     },
-  )
-  const [distribution, setDistribution] = useState<SalaryDistribution | null>(
-    null,
   )
 
   const [selectedMonth, setSelectedMonth] = useState<string>(
@@ -158,23 +160,28 @@ export function DashboardRootPage() {
           <SalaryInput onCalculate={handleCalculate} />
         ) : null}
 
-        {distribution && (
-          <div className="space-y-8 mt-8">
-            <MonthSelector
-              selectedMonth={selectedMonth}
-              onMonthChange={setSelectedMonth}
-            />
-
-            <Dashboard
-              budgets={calculateCategoryBudgets(distribution, filteredExpenses)}
-              trendData={trendData}
-              comparisonData={comparisonData}
-              balanceData={balanceData}
-            />
-
-            <ExpenseTable />
-          </div>
-        )}
+        <div className="space-y-8 mt-8">
+          {isGettingExpenses || isGettingSalary || !distribution ? (
+            <LoadingDashboard />
+          ) : (
+            <>
+              <MonthSelector
+                selectedMonth={selectedMonth}
+                onMonthChange={setSelectedMonth}
+              />
+              <Dashboard
+                budgets={calculateCategoryBudgets(
+                  distribution,
+                  filteredExpenses,
+                )}
+                trendData={trendData}
+                comparisonData={comparisonData}
+                balanceData={balanceData}
+              />
+              <ExpenseTable />
+            </>
+          )}
+        </div>
       </>
     </div>
   )

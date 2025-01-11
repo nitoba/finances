@@ -1,4 +1,3 @@
-// import { Header } from '@/components/header'
 import { ReactNode } from 'react'
 
 import { AppSidebar } from '@/components/sidebar/sidebar'

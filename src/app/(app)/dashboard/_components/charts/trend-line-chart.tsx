@@ -1,6 +1,4 @@
 'use client'
-
-import * as React from 'react'
 import {
   CartesianGrid,
   Line,
@@ -20,7 +18,8 @@ import {
 } from '@/components/ui/card'
 import { ChartConfig, ChartContainer } from '@/components/ui/chart'
 import { green, blue, purple, yellow, red } from 'tailwindcss/colors'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 interface TrendLineChartProps {
   data: { name: string; [key: string]: number | string }[]
@@ -51,7 +50,7 @@ const chartConfig = {
 
 export function TrendLineChart({ data }: TrendLineChartProps) {
   const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>('essentials')
+    useState<keyof typeof chartConfig>('essentials')
 
   return (
     <Card>

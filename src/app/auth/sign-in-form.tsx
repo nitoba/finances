@@ -30,7 +30,7 @@ export function SignInForm() {
         onSuccess: () => {
           // redirect to dashboard
           toast.success('Signed in successfully!')
-          replace('/')
+          replace('/dashboard')
         },
         onError: (ctx) => {
           toast.error('Error signing in', {

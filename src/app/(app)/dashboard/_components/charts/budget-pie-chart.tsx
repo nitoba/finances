@@ -8,21 +8,22 @@ import {
   Legend,
   Tooltip,
 } from 'recharts'
+
+import { CategoryBudget } from '@/types/finance'
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '../ui/chart'
+} from '@/components/ui/chart'
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from '../ui/card'
-import { CategoryBudget } from '@/types/finance'
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
 
 const chartConfig = {
   essentials: {

@@ -1,40 +1,43 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { SalaryInput } from './salary-input'
-import { Dashboard } from './dashboard'
-import { ExpenseForm } from './expense-form'
-import { ExpenseTable } from './expensive-table/expense-table'
-import { SalaryDistribution } from '../types/finance'
-import {
-  calculateDistribution,
-  calculateCategoryBudgets,
-  calculateWeeklyTrends,
-  calculateComparisonData,
-  calculateBalanceProjection,
-} from '../utils/calculations'
-import { Button } from './ui/button'
+
 import { PlusCircle } from 'lucide-react'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from './ui/dialog'
-import { cn } from '../lib/utils'
+
 import { MonthSelector } from './month-selector'
 import dayjs from 'dayjs'
-import { useExpenses } from '../hooks/use-expenses'
-import { Skeleton } from './ui/skeleton'
+
 import { toast } from 'sonner'
 import { getSalaryAction } from '@/services/actions/user.action'
 import { useServerActionQuery } from '@/hooks/server-action-hooks'
 import { useQueryClient } from '@tanstack/react-query'
 import { LoadingDashboard } from './loading-dashboard'
+import { useExpenses } from '@/hooks/use-expenses'
+import { SalaryDistribution } from '@/types/finance'
+import {
+  calculateBalanceProjection,
+  calculateCategoryBudgets,
+  calculateComparisonData,
+  calculateDistribution,
+  calculateWeeklyTrends,
+} from '@/utils/calculations'
+import { ExpenseForm } from '@/components/expense-form'
+import { ExpenseTable } from '@/components/expensive-table/expense-table'
+import { SalaryInput } from '@/components/salary-input'
+import { DialogHeader } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
+import { cn } from '@/lib/utils'
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from '@radix-ui/react-dialog'
+import { DashboardBlocks } from './dashboard-blocks'
+import { Button } from '@/components/ui/button'
 
-export function DashboardRootPage() {
+export function Dashboard() {
   const queryClient = useQueryClient()
   const { data: expenses, isLoading: isGettingExpenses } = useExpenses()
   const [distribution, setDistribution] = useState<SalaryDistribution | null>(
@@ -169,7 +172,7 @@ export function DashboardRootPage() {
                 selectedMonth={selectedMonth}
                 onMonthChange={setSelectedMonth}
               />
-              <Dashboard
+              <DashboardBlocks
                 budgets={calculateCategoryBudgets(
                   distribution,
                   filteredExpenses,

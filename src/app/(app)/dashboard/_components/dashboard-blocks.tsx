@@ -1,11 +1,11 @@
 import { AlertTriangle } from 'lucide-react'
 import { CategoryBudget } from '@/types/finance'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 import { BudgetPieChart } from './charts/budget-pie-chart'
 import { BudgetBarChart } from './charts/budget-bar-chart'
 import { TrendLineChart } from './charts/trend-line-chart'
 import { BalanceAreaChart } from './charts/aread-chart'
-import { cn } from '@/lib/utils'
 
 interface DashboardProps {
   budgets: CategoryBudget[]
@@ -14,7 +14,11 @@ interface DashboardProps {
   balanceData: { name: string; balance: number }[]
 }
 
-export function Dashboard({ budgets, trendData, balanceData }: DashboardProps) {
+export function DashboardBlocks({
+  budgets,
+  trendData,
+  balanceData,
+}: DashboardProps) {
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'essentials':

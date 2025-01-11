@@ -1,5 +1,4 @@
 import { ArrowDown, ArrowUp } from 'lucide-react'
-
 import {
   Card,
   CardContent,
@@ -7,52 +6,54 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-
-const categoryData = [
-  {
-    category: 'Essentials',
-    amount: 1882.77,
-    percentageOfTotal: 50.5,
-    trend: 'up',
-    previousAmount: 1650.0,
-    color: '#3b82f6', // blue-500
-  },
-  {
-    category: 'Leisure',
-    amount: 609.1,
-    percentageOfTotal: 16.3,
-    trend: 'down',
-    previousAmount: 750.0,
-    color: '#10b981', // emerald-500
-  },
-  {
-    category: 'Investments',
-    amount: 530.41,
-    percentageOfTotal: 14.2,
-    trend: 'up',
-    previousAmount: 480.0,
-    color: '#f59e0b', // amber-500
-  },
-  {
-    category: 'Emergency',
-    amount: 700.0,
-    percentageOfTotal: 18.8,
-    trend: 'neutral',
-    previousAmount: 700.0,
-    color: '#ef4444', // red-500
-  },
-  {
-    category: 'Knowledge',
-    amount: 0.0,
-    percentageOfTotal: 0,
-    trend: 'down',
-    previousAmount: 100.0,
-    color: '#8b5cf6', // violet-500
-  },
-]
+import { useExpenses } from '@/hooks/use-expenses'
+import { useUser } from '@/hooks/use-user'
 
 export function ExpenseRankings() {
-  const sortedCategories = [...categoryData].sort((a, b) => b.amount - a.amount)
+  const { user } = useUser()
+  const { data: expenses } = useExpenses()
+
+  if (!user || !expenses) {
+    return null
+  }
+
+  const categories = [
+    'essentials',
+    'leisure',
+    'investments',
+    'emergency',
+    'knowledge',
+  ]
+  const categoryData = categories.map((category) => {
+    const categoryExpenses = expenses.filter(
+      (expense) => expense.category === category,
+    )
+    const amount = categoryExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0,
+    )
+    const previousAmount = 0 // Aqui você pode adicionar lógica para obter o valor anterior, se disponível
+    const trend =
+      amount > previousAmount
+        ? 'up'
+        : amount < previousAmount
+          ? 'down'
+          : 'neutral'
+    const percentageOfTotal =
+      (amount / expenses.reduce((sum, expense) => sum + expense.amount, 0)) *
+      100
+
+    return {
+      category: category.charAt(0).toUpperCase() + category.slice(1),
+      amount,
+      percentageOfTotal,
+      trend,
+      previousAmount,
+      color: getColorForCategory(category),
+    }
+  })
+
+  const sortedCategories = categoryData.sort((a, b) => b.amount - a.amount)
 
   return (
     <Card className="lg:col-span-4">
@@ -71,7 +72,7 @@ export function ExpenseRankings() {
                   {category.category}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {category.percentageOfTotal}% of total expenses
+                  {category.percentageOfTotal.toFixed(2)}% of total expenses
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -88,4 +89,21 @@ export function ExpenseRankings() {
       </CardContent>
     </Card>
   )
+}
+
+function getColorForCategory(category: string): string {
+  switch (category) {
+    case 'essentials':
+      return '#3b82f6' // blue-500
+    case 'leisure':
+      return '#10b981' // emerald-500
+    case 'investments':
+      return '#f59e0b' // amber-500
+    case 'emergency':
+      return '#ef4444' // red-500
+    case 'knowledge':
+      return '#8b5cf6' // violet-500
+    default:
+      return '#000000' // default color
+  }
 }

@@ -7,6 +7,10 @@ import {
 export const QueryKeyFactory = createServerActionsKeyFactory({
   expenses: () => ['expenses'],
   salary: () => ['salary'],
+  previousExpenses: (previousMonth: string) => [
+    'previous-expenses',
+    previousMonth,
+  ],
 })
 
 const {

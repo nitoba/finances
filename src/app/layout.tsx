@@ -41,8 +41,6 @@ export const metadata: Metadata = {
     title: 'Personal Finance Manager',
     description: 'Smart personal finance tracking with the 70/30 budget rule',
   },
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#ffffff',
 }
 
 export default function RootLayout({

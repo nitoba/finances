@@ -2,7 +2,7 @@ import { authClient } from '@/lib/auth-client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { User } from 'better-auth'
 
-type CurrentUser = User & {
+export type CurrentUser = User & {
   monthlySalary: number | null
 }
 
@@ -21,8 +21,6 @@ export function useUser() {
       if (!session) {
         return null
       }
-
-      console.log(session.data?.user)
 
       return session.data?.user as CurrentUser
     },

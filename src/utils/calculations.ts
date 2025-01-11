@@ -1,6 +1,7 @@
 import { Expense } from '@/schemas/expense.schema'
 import { CategoryBudget, SalaryDistribution } from '../types/finance'
 import { ExpenseCategory } from '@/schemas/category.schema'
+import { CurrentUser } from '@/hooks/use-user'
 
 export const calculateDistribution = (salary: number): SalaryDistribution => {
   const essentialsTotal = salary * 0.7
@@ -106,4 +107,42 @@ export const calculateBalanceProjection = (
     remainingBalance -= weeklyExpenses[index]
     return { name: week, balance: remainingBalance }
   })
+}
+
+export const calculateTotalIncome = (user: CurrentUser): number => {
+  const totalIncome = user.monthlySalary || 0
+
+  // Adicione outras fontes de renda se houver
+
+  return totalIncome
+}
+
+export const calculateSavingsRate = (
+  totalIncome: number,
+  totalExpenses: number,
+): number => {
+  if (totalIncome === 0) {
+    throw new Error('Total income cannot be zero')
+  }
+  return ((totalIncome - totalExpenses) / totalIncome) * 100
+}
+
+export const calculateDiscretionarySpending = (expenses: Expense[]): number => {
+  return expenses
+    .filter(
+      (expense) => expense.category === 'leisure',
+      // expense.category === 'entertainment' ||
+      // expense.category === 'hobbies',
+    )
+    .reduce((sum, expense) => sum + expense.amount, 0)
+}
+
+export const calculateBudgetUtilization = (
+  totalExpenses: number,
+  totalBudget: number,
+): number => {
+  if (totalBudget === 0) {
+    throw new Error('Total budget cannot be zero')
+  }
+  return (totalExpenses / totalBudget) * 100
 }

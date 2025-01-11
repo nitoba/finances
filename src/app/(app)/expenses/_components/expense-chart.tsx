@@ -1,7 +1,8 @@
 'use client'
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
-
+import { useExpenses } from '@/hooks/use-expenses'
+import { useUser } from '@/hooks/use-user'
 import {
   Card,
   CardContent,
@@ -9,31 +10,35 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-
-const data = [
-  {
-    name: '01/01',
-    total: 500.0,
-  },
-  {
-    name: '07/01',
-    total: 700.0,
-  },
-  {
-    name: '08/01',
-    total: 69.0,
-  },
-  {
-    name: '09/01',
-    total: 269.6,
-  },
-  {
-    name: '05/01',
-    total: 28.0,
-  },
-]
+import dayjs from 'dayjs'
 
 export function ExpenseChart() {
+  const { user } = useUser()
+  const { data: expenses } = useExpenses()
+
+  if (!user || !expenses) {
+    return null
+  }
+
+  // Calcular os gastos diários
+  const dailyExpenses = expenses.reduce(
+    (acc, expense) => {
+      const date = dayjs(expense.date).format('DD/MM')
+      if (!acc[date]) {
+        acc[date] = 0
+      }
+      acc[date] += expense.amount
+      return acc
+    },
+    {} as Record<string, number>,
+  )
+
+  // Converter os dados para o formato necessário pelo gráfico
+  const data = Object.keys(dailyExpenses).map((date) => ({
+    name: date,
+    total: dailyExpenses[date],
+  }))
+
   return (
     <Card className="col-span-4">
       <CardHeader>

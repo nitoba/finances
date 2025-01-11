@@ -97,7 +97,7 @@ export function Dashboard() {
       : []
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-8 sm:px-4">
       <>
         <div
           className={cn('flex flex-col sm:flex-row justify-between', {
@@ -108,7 +108,7 @@ export function Dashboard() {
             Personal Finance Manager (70/30 Rule)
           </h1>
 
-          {distribution && <AddExpenseDialog />}
+          {distribution && <AddExpenseDialog className="w-full sm:w-auto" />}
         </div>
 
         {isGettingSalary ? (

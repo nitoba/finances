@@ -1,4 +1,4 @@
-import { sqliteTable, text, real } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, real, integer } from 'drizzle-orm/sqlite-core'
 import { users } from './auth-schema'
 import { ExpenseCategory } from '@/schemas/category.schema'
 
@@ -8,9 +8,19 @@ export const expenses = sqliteTable('expenses', {
   description: text('description').notNull(),
   amount: real('amount').notNull(),
   category: text('category').$type<ExpenseCategory>().notNull(),
+  isRecurring: integer('is_recurring')
+    .$type<boolean>()
+    .notNull()
+    .default(false),
   userId: text('user_id')
     .notNull()
     .references(() => users.id),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .$type<Date>()
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp' })
+    .$type<Date>()
+    .notNull(),
 })
 
 // export const categoryBudget = sqliteTable('category_budgets', {

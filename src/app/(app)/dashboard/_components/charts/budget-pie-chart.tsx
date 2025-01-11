@@ -58,10 +58,8 @@ export function BudgetPieChart({ budgets }: BudgetPieChartProps) {
   return (
     <Card className="lg:col-span-3">
       <CardHeader>
-        <CardTitle>Category Distribution</CardTitle>
-        <CardDescription>
-          Visual representation of spending by category
-        </CardDescription>
+        <CardTitle>Expense Distribution</CardTitle>
+        <CardDescription>Current Budget Distribution</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full">

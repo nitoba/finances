@@ -6,7 +6,8 @@ const publicRoutes = ['/auth']
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
-  const isProtectedRoute = !publicRoutes.includes(path)
+
+  const isProtectedRoute = !publicRoutes.includes(path) || path === '/'
 
   const session = await getSession()
 
@@ -15,6 +16,10 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!isProtectedRoute && session) {
+    return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
+  }
+
+  if (isProtectedRoute && path === '/') {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
   }
 

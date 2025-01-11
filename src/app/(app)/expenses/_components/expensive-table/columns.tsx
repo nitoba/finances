@@ -6,9 +6,9 @@ import dayjs from 'dayjs'
 
 export const columns: ColumnDef<Expense>[] = [
   {
-    accessorKey: 'date',
+    accessorKey: 'createdAt',
     header: 'Date',
-    cell: ({ row }) => dayjs(row.getValue('date')).format('DD/MM/YYYY'),
+    cell: ({ row }) => dayjs(row.getValue('createdAt')).format('DD/MM/YYYY'),
   },
   {
     accessorKey: 'description',

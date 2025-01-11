@@ -11,13 +11,14 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import dayjs from 'dayjs'
+import { LoadingExpenseChart } from './loading-expense-chart'
 
 export function ExpenseChart() {
   const { user } = useUser()
   const { data: expenses } = useExpenses()
 
   if (!user || !expenses) {
-    return null
+    return <LoadingExpenseChart />
   }
 
   // Calcular os gastos diários

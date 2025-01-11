@@ -1,1 +1,0 @@
-ALTER TABLE `expenses` ADD `is_recurring` integer DEFAULT 0 NOT NULL;

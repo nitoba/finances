@@ -13,6 +13,7 @@ import { useExpenses } from '@/hooks/use-expenses'
 import { useServerActionQuery } from '@/hooks/server-action-hooks'
 import dayjs from 'dayjs'
 import { getExpensesByMonthAction } from '@/services/actions/expenses.action'
+import { LoadingExpenseCards } from './loading-expense-cards'
 
 const previousMonth = dayjs().subtract(1, 'month').toDate().toISOString()
 
@@ -27,7 +28,7 @@ export function ExpenseSummary() {
   )
 
   if (!expenses || isLoading) {
-    return null
+    return <LoadingExpenseCards />
   }
 
   const totalExpenses = expenses.reduce(

@@ -1,6 +1,7 @@
 import { sqliteTable, text, real, integer } from 'drizzle-orm/sqlite-core'
 import { users } from './auth-schema'
 import { ExpenseCategory } from '@/schemas/category.schema'
+import { sql } from 'drizzle-orm'
 
 export const expenses = sqliteTable('expenses', {
   id: text('id').primaryKey(),
@@ -11,16 +12,18 @@ export const expenses = sqliteTable('expenses', {
   isRecurring: integer('is_recurring')
     .$type<boolean>()
     .notNull()
-    .default(false),
+    .default(sql`0`),
   userId: text('user_id')
     .notNull()
     .references(() => users.id),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .$type<Date>()
-    .notNull(),
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
   updatedAt: integer('updated_at', { mode: 'timestamp' })
     .$type<Date>()
-    .notNull(),
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
 })
 
 // export const categoryBudget = sqliteTable('category_budgets', {

@@ -16,11 +16,10 @@ export default function Page() {
             Gerencie e acompanhe todas as suas despesas em um só lugar
           </p>
         </div>
-        <AddExpenseDialog className="w-full" />
+        <AddExpenseDialog className="w-full sm:w-auto" />
       </div>
       <ExpenseSummary />
       <ExpenseInsights />
-      {/* <ExpenseTrends /> */}
       <ExpenseChart />
       <ExpenseTable />
     </div>

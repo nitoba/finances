@@ -8,15 +8,16 @@ import { useState } from 'react'
 import { useServerAction } from 'zsa-react'
 import { saveSalaryAction } from '@/services/actions/user.action'
 import { Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 
-interface SalaryInputProps {
-  onCalculate: (salary: number) => void
-}
-
-export function SalaryInput({ onCalculate }: SalaryInputProps) {
+export function SalaryInput() {
+  const { replace } = useRouter()
+  const queryClient = useQueryClient()
   const { isPending, execute } = useServerAction(saveSalaryAction, {
-    onSuccess: (res) => {
-      onCalculate(res.data.salary)
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['salary'] })
+      replace('/dashboard')
     },
     onError: (error) => {
       toast.error(error.err.message)

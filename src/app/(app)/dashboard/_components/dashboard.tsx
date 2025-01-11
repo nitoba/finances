@@ -19,8 +19,6 @@ import {
   calculateDistribution,
   calculateWeeklyTrends,
 } from '@/utils/calculations'
-import { SalaryInput } from '@/components/salary-input'
-import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { DashboardBlocks } from './dashboard-blocks'
 import { AddExpenseDialog } from '../../../../components/add-expense-dialog'
@@ -110,19 +108,6 @@ export function Dashboard() {
 
           {distribution && <AddExpenseDialog className="w-full sm:w-auto" />}
         </div>
-
-        {isGettingSalary ? (
-          <div className="flex flex-col items-center gap-4 max-w-md mx-auto">
-            <Skeleton className="w-full h-12 rounded-lg" />
-            <Skeleton className="w-3/4 h-4 rounded-md" />
-            <div className="w-full space-y-4 mt-4">
-              <Skeleton className="w-full h-14 rounded-lg" />
-              <Skeleton className="w-32 h-10 rounded-md ml-auto" />
-            </div>
-          </div>
-        ) : !salary && !isGettingSalary ? (
-          <SalaryInput onCalculate={handleCalculate} />
-        ) : null}
 
         <div className="space-y-8 mt-8">
           {isGettingExpenses || isGettingSalary || !distribution ? (

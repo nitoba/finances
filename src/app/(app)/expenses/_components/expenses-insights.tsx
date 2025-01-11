@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 import { Expense } from '@/schemas/expense.schema'
 import { getExpensesByMonthAction } from '@/services/actions/expenses.action'
 import { useServerActionQuery } from '@/hooks/server-action-hooks'
+import { LoadingExpenseCards } from './loading-expense-cards'
 
 const previousMonth = dayjs().subtract(1, 'month').toDate().toISOString()
 
@@ -30,7 +31,7 @@ export function ExpenseInsights() {
   )
 
   if (!user || !expenses || isLoading) {
-    return null
+    return <LoadingExpenseCards />
   }
 
   // Gasto Recorrente Mais Alto

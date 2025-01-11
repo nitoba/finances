@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
 import { CalendarIcon, PlusCircle } from 'lucide-react'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { Button } from './ui/button'
-import { Calendar } from './ui/calendar'
 import { cn } from '@/lib/utils'
-import { Input } from './ui/input'
+
+import { useCreateExpense } from '@/hooks/use-expenses'
+import { ExpenseCategory } from '@/schemas/category.schema'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select'
-import { useCreateExpense } from '@/hooks/use-expenses'
-import { ExpenseCategory } from '@/schemas/category.schema'
+} from '@/components/ui/select'
 
 interface ExpenseFormProps {
   onAddExpense: () => void

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.12",
+    "@hookform/resolvers": "^3.10.0",
     "@libsql/client": "^0.14.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -38,6 +39,7 @@
     "react": "^19.0.0",
     "react-day-picker": "8.10.1",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
     "recharts": "^2.15.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.2.1",

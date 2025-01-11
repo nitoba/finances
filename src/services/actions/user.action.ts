@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm'
 import { createServerAction, ZSAError } from 'zsa'
 import z from 'zod'
 import { currentUser } from '@/lib/auth/current-session.server'
+import { userProfileSchema } from '@/schemas/user.schema'
 
 export const saveSalaryAction = createServerAction()
   .input(
@@ -44,3 +45,25 @@ export const getSalaryAction = createServerAction().handler(async () => {
 
   return salary?.monthlySalary
 })
+
+export const updateUserProfileAction = createServerAction()
+  .input(userProfileSchema)
+  .handler(async ({ input }) => {
+    const user = await currentUser()
+
+    if (!user) {
+      throw new ZSAError('NOT_AUTHORIZED', 'Not authorized')
+    }
+
+    const updatedUser = await db
+      .update(users)
+      .set({
+        name: input.name,
+        monthlySalary: input.monthlySalary,
+        image: input.imageUrl || null,
+      })
+      .where(eq(users.id, user.id))
+      .returning()
+
+    return updatedUser[0]
+  })

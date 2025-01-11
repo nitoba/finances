@@ -33,7 +33,7 @@ export function BalanceAreaChart({ data }: AreaChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Balance Area Chart</CardTitle>
+        <CardTitle>Projected Balance</CardTitle>
         <CardDescription>Showing balance over time</CardDescription>
       </CardHeader>
       <CardContent>

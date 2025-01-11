@@ -1,20 +1,26 @@
 import React from 'react'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { DialogFooter } from './ui/dialog'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
+
 import { CalendarIcon } from 'lucide-react'
-import { Calendar } from './ui/calendar'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select'
+
 import { Expense } from '@/schemas/expense.schema'
 import { ExpenseCategory } from '@/schemas/category.schema'
 import dayjs from 'dayjs'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { DialogFooter } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@radix-ui/react-select'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 interface ExpenseEditFormProps {
   expense: Expense
   onSave: (expense: Expense) => void

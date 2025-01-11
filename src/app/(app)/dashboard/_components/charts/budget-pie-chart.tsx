@@ -70,7 +70,7 @@ export function BudgetPieChart({ budgets }: BudgetPieChartProps) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center sm:pb-0 pb-5">
-        <CardTitle>Budget Pie Chart</CardTitle>
+        <CardTitle>Expense Distribution</CardTitle>
         <CardDescription>Current Budget Distribution</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">

@@ -60,7 +60,7 @@ export function BudgetBarChart({ budgets }: BudgetBarChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Budget Bar Chart</CardTitle>
+        <CardTitle>Budget vs. Spending</CardTitle>
         <CardDescription>Planned vs Spent</CardDescription>
       </CardHeader>
       <CardContent>

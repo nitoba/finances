@@ -14,13 +14,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { ExpenseEditForm } from '../expense-edit-form'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
+
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import {
   useExpenses,
@@ -28,6 +22,14 @@ import {
   useDeleteExpense,
 } from '@/hooks/use-expenses'
 import { Expense } from '@/schemas/expense.schema'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { TableLoading } from './table-loading'
 
 export function ExpenseTable() {
   const { data: expenses = [], isLoading, error } = useExpenses()
@@ -110,7 +112,7 @@ export function ExpenseTable() {
     [],
   )
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <TableLoading />
   if (error) return <div>Error loading expenses</div>
 
   return (

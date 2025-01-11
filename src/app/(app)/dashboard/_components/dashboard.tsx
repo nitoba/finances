@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react'
 
-import { PlusCircle } from 'lucide-react'
-
 import { MonthSelector } from './month-selector'
 import dayjs from 'dayjs'
 
@@ -21,21 +19,11 @@ import {
   calculateDistribution,
   calculateWeeklyTrends,
 } from '@/utils/calculations'
-import { ExpenseForm } from '@/components/expense-form'
-import { ExpenseTable } from '@/components/expensive-table/expense-table'
 import { SalaryInput } from '@/components/salary-input'
-import { DialogHeader } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from '@radix-ui/react-dialog'
 import { DashboardBlocks } from './dashboard-blocks'
-import { Button } from '@/components/ui/button'
+import { AddExpenseDialog } from '../../../../components/add-expense-dialog'
 
 export function Dashboard() {
   const queryClient = useQueryClient()
@@ -55,8 +43,6 @@ export function Dashboard() {
   const [selectedMonth, setSelectedMonth] = useState<string>(
     new Date().toISOString().slice(0, 7),
   )
-
-  const [expensiveFormIsOpen, setExpensiveFormIsOpen] = useState(false)
 
   useEffect(() => {
     // Function to reset expenses at the start of a new month
@@ -122,32 +108,7 @@ export function Dashboard() {
             Personal Finance Manager (70/30 Rule)
           </h1>
 
-          {distribution && (
-            <Dialog
-              open={expensiveFormIsOpen}
-              onOpenChange={setExpensiveFormIsOpen}
-            >
-              <DialogTrigger asChild>
-                <Button>
-                  Add Expense
-                  <PlusCircle className="size-5" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[900px]">
-                <DialogHeader>
-                  <DialogTitle>New Transaction</DialogTitle>
-                  <DialogDescription>
-                    Fill in the transaction details below to add a new expense
-                    to your financial tracking.
-                  </DialogDescription>
-                </DialogHeader>
-
-                <ExpenseForm
-                  onAddExpense={() => setExpensiveFormIsOpen(false)}
-                />
-              </DialogContent>
-            </Dialog>
-          )}
+          {distribution && <AddExpenseDialog />}
         </div>
 
         {isGettingSalary ? (
@@ -181,7 +142,6 @@ export function Dashboard() {
                 comparisonData={comparisonData}
                 balanceData={balanceData}
               />
-              <ExpenseTable />
             </>
           )}
         </div>

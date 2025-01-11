@@ -1,12 +1,11 @@
 'use client'
 
 import {
-  BadgeCheck,
-  Bell,
   ChevronsUpDown,
   CreditCard,
   LogOut,
   Sparkles,
+  UserSearch,
 } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -28,6 +27,7 @@ import {
 import { useUser } from '@/hooks/use-user'
 import { SignOutButton } from './sign-out-button'
 import { Skeleton } from './ui/skeleton'
+import Link from 'next/link'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -50,6 +50,12 @@ export function NavUser() {
     )
   }
 
+  const userNameInitials = user.name
+    ?.split(' ')
+    .map((name) => name[0])
+    .join('')
+    .toUpperCase()
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -62,11 +68,7 @@ export function NavUser() {
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.image ?? ''} alt={user.name} />
                 <AvatarFallback className="rounded-lg">
-                  {user.name
-                    ?.split(' ')
-                    .map((name) => name[0])
-                    .join('')
-                    .toUpperCase()}
+                  {userNameInitials}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -86,40 +88,34 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.image ?? ''} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {userNameInitials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {user.name
-                      ?.split(' ')
-                      .map((name) => name[0])
-                      .join('')
-                      .toUpperCase()}
-                  </span>
+                  <span className="truncate font-semibold">{user.name}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-not-allowed opacity-50">
                 <Sparkles />
-                Upgrade to Pro
+                Upgrade to Pro (Soon)
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem asChild>
+                <Link href="/user-settings">
+                  <UserSearch />
+                  User settings
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-not-allowed opacity-50">
                 <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+                Billing (Soon)
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

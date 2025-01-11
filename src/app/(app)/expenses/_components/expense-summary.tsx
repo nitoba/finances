@@ -44,10 +44,13 @@ export function ExpenseSummary() {
   const daysInPreviousMonth = dayjs(previousMonth).daysInMonth()
 
   const averagePerDay = totalExpenses / daysInCurrentMonth
-  const previousAveragePerDay = previousTotalExpenses / daysInPreviousMonth
+  const previousAveragePerDay =
+    previousTotalExpenses > 0 ? previousTotalExpenses / daysInPreviousMonth : 0
 
   const averagePerDayChangePercentage =
-    ((averagePerDay - previousAveragePerDay) / previousAveragePerDay) * 100
+    previousAveragePerDay > 0
+      ? ((averagePerDay - previousAveragePerDay) / previousAveragePerDay) * 100
+      : 0
 
   const highestExpense = expenses.reduce(
     (max, expense) => (expense.amount > max.amount ? expense : max),
@@ -69,10 +72,12 @@ export function ExpenseSummary() {
     Object.keys(categoryTotals)[0],
   )
   const mainCategoryPercentage =
-    (categoryTotals[mainCategory] / totalExpenses) * 100
+    totalExpenses > 0 ? (categoryTotals[mainCategory] / totalExpenses) * 100 : 0
 
   const expenseChangePercentage =
-    ((totalExpenses - previousTotalExpenses) / previousTotalExpenses) * 100
+    previousTotalExpenses > 0
+      ? ((totalExpenses - previousTotalExpenses) / previousTotalExpenses) * 100
+      : 0
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

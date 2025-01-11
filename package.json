@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "db:migrate:dev": "drizzle-kit migrate --config drizzle.dev.config.ts",
+    "db:start:dev": "turso dev --db-file finances.db"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.12",

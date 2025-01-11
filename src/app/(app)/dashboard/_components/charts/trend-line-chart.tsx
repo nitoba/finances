@@ -49,8 +49,9 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function TrendLineChart({ data }: TrendLineChartProps) {
-  const [activeChart, setActiveChart] =
-    useState<keyof typeof chartConfig>('essentials')
+  const [activeChart, setActiveChart] = useState<
+    keyof typeof chartConfig | 'all'
+  >('all')
 
   return (
     <Card>
@@ -63,6 +64,18 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
           </CardDescription>
         </div>
         <div className="flex gap-2 px-2 py-2 flex-wrap">
+          <Button
+            variant="outline"
+            data-active={activeChart === 'all'}
+            className="flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left data-[active=true]:bg-muted/80"
+            onClick={() => {
+              setActiveChart('all')
+            }}
+          >
+            <span className="text-xs text-muted-foreground">
+              Show All Categories
+            </span>
+          </Button>
           {Object.keys(chartConfig).map((key) => {
             const chart = key as keyof typeof chartConfig
             return (
@@ -105,13 +118,26 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line
-              dataKey={activeChart}
-              type="monotone"
-              stroke={chartConfig[activeChart].color}
-              strokeWidth={2}
-              dot={false}
-            />
+            {activeChart === 'all' ? (
+              Object.keys(chartConfig).map((key) => (
+                <Line
+                  key={key}
+                  dataKey={key}
+                  type="monotone"
+                  stroke={chartConfig[key as keyof typeof chartConfig].color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+              ))
+            ) : (
+              <Line
+                dataKey={activeChart}
+                type="monotone"
+                stroke={chartConfig[activeChart].color}
+                strokeWidth={2}
+                dot={false}
+              />
+            )}
           </LineChart>
         </ChartContainer>
       </CardContent>

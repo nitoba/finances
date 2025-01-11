@@ -4,6 +4,8 @@ import { BudgetBarChart } from './charts/budget-bar-chart'
 import { TrendLineChart } from './charts/trend-line-chart'
 import { BalanceAreaChart } from './charts/aread-chart'
 import { BudgetStatusCards } from './componente'
+import { FinancialMetrics } from './financial-metrics'
+import { ExpenseRankings } from './expense-ranking'
 
 interface DashboardProps {
   budgets: CategoryBudget[]
@@ -20,6 +22,12 @@ export function DashboardBlocks({
   return (
     <div className="space-y-8">
       <BudgetStatusCards budgets={budgets} />
+
+      <div className="flex-1 space-y-4">
+        <FinancialMetrics />
+        <ExpenseRankings />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BudgetPieChart budgets={budgets} />
         <BudgetBarChart budgets={budgets} />

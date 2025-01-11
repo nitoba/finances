@@ -1,56 +1,16 @@
 // 'use client'
 
-import {
-  Pie,
-  PieChart,
-  Cell,
-  ResponsiveContainer,
-  Legend,
-  Tooltip,
-} from 'recharts'
+import { Pie, PieChart, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 
 import { CategoryBudget } from '@/types/finance'
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart'
+import { ChartConfig } from '@/components/ui/chart'
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from '@/components/ui/card'
-
-const chartConfig = {
-  essentials: {
-    label: 'Essentials',
-    color: 'hsl(var(--chart-1))',
-  },
-  leisure: {
-    label: 'Leisure',
-    color: 'hsl(var(--chart-2))',
-  },
-  investments: {
-    label: 'Investments',
-    color: 'hsl(var(--chart-3))',
-  },
-  knowledge: {
-    label: 'Knowledge',
-    color: 'hsl(var(--chart-4))',
-  },
-  emergency: {
-    label: 'Emergency',
-    color: 'hsl(var(--chart-5))',
-  },
-} satisfies ChartConfig
-
-interface BudgetPieChartProps {
-  budgets: CategoryBudget[]
-}
 
 const COLORS = {
   essentials: '#3b82f6',
@@ -60,90 +20,101 @@ const COLORS = {
   emergency: '#ef4444',
 }
 
+const chartConfig = {
+  essentials: {
+    label: 'Essentials',
+    color: COLORS.essentials,
+  },
+  leisure: {
+    label: 'Leisure',
+    color: COLORS.leisure,
+  },
+  investments: {
+    label: 'Investments',
+    color: COLORS.investments,
+  },
+  knowledge: {
+    label: 'Knowledge',
+    color: COLORS.knowledge,
+  },
+  emergency: {
+    label: 'Emergency',
+    color: COLORS.emergency,
+  },
+} satisfies ChartConfig
+
+interface BudgetPieChartProps {
+  budgets: CategoryBudget[]
+}
+
 export function BudgetPieChart({ budgets }: BudgetPieChartProps) {
-  const data = budgets.map((budget) => ({
+  const sortedCategories = budgets.map((budget) => ({
     name: budget.category.charAt(0).toUpperCase() + budget.category.slice(1),
     value: budget.spent,
     planned: budget.planned,
+    color: chartConfig[budget.category].color,
   }))
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center sm:pb-0 pb-5">
-        <CardTitle>Expense Distribution</CardTitle>
-        <CardDescription>Current Budget Distribution</CardDescription>
+    <Card className="lg:col-span-3">
+      <CardHeader>
+        <CardTitle>Category Distribution</CardTitle>
+        <CardDescription>
+          Visual representation of spending by category
+        </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-auto sm:aspect-square h-[350px] sm:max-h-[300px]"
-        >
+      <CardContent>
+        <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    labelKey="category"
-                    nameKey="name"
-                    indicator="line"
-                    labelFormatter={(_, payload) => {
-                      return chartConfig[
-                        payload?.[0].dataKey as keyof typeof chartConfig
-                      ]?.label
-                    }}
-                  />
-                }
-              />
               <Pie
-                data={data}
-                dataKey="value"
+                data={sortedCategories}
                 cx="50%"
                 cy="50%"
+                innerRadius={60}
                 outerRadius={80}
+                paddingAngle={5}
+                dataKey="value"
                 labelLine={false}
               >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={
-                      COLORS[entry.name.toLowerCase() as keyof typeof COLORS]
-                    }
-                  />
+                {sortedCategories.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Pie
-                data={data}
-                dataKey="planned"
-                cx="50%"
-                cy="50%"
-                innerRadius={90}
-                outerRadius={100}
-                labelLine={false}
-                opacity={0.3}
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-planned-${index}`}
-                    fill={
-                      COLORS[entry.name.toLowerCase() as keyof typeof COLORS]
-                    }
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0].payload
+                    return (
+                      <div className="rounded-lg bg-white p-2 shadow-md">
+                        <p className="font-semibold">{data.category}</p>
+                        <p className="text-sm text-gray-500">
+                          ${data.value.toFixed(2)}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {data.planned} of total
+                        </p>
+                      </div>
+                    )
+                  }
+                  return null
+                }}
+              />
             </PieChart>
           </ResponsiveContainer>
-        </ChartContainer>
+        </div>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          {sortedCategories.map((category) => (
+            <div key={category.name} className="flex items-center">
+              <div
+                className="mr-2 h-3 w-3 rounded-full"
+                style={{ backgroundColor: category.color }}
+              />
+              <span className="text-sm">{category.name}</span>
+            </div>
+          ))}
+        </div>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm mt-5">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Budget Overview
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing current budget distribution
-        </div>
-      </CardFooter>
     </Card>
   )
 }

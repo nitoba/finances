@@ -25,11 +25,13 @@ export function DashboardBlocks({
 
       <div className="flex-1 space-y-4">
         <FinancialMetrics />
-        <ExpenseRankings />
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <ExpenseRankings />
+          <BudgetPieChart budgets={budgets} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <BudgetPieChart budgets={budgets} />
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
         <BudgetBarChart budgets={budgets} />
       </div>
 

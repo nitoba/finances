@@ -20,10 +20,7 @@ export type SignUpFormProps = {
   onHandleSignIn: () => void
 }
 
-export function SignUpForm({
-  onSignUpWithEmailSuccess,
-  onHandleSignIn,
-}: SignUpFormProps) {
+export function SignUpForm({ onHandleSignIn }: SignUpFormProps) {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -73,11 +70,6 @@ export function SignUpForm({
       {
         onRequest: () => {
           setIsSignUpping(true)
-        },
-        onSuccess: () => {
-          // redirect to the dashboard
-          toast.success('Conta criada com sucesso!')
-          onSignUpWithEmailSuccess()
         },
         onError: (ctx) => {
           toast.error('Erro ao criar conta', {

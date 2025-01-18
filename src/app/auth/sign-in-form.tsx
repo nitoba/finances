@@ -62,11 +62,6 @@ export function SignInForm({ onHandleSignUp }: Props) {
         onRequest: () => {
           setIsPending(true)
         },
-        onSuccess: () => {
-          // redirect to dashboard
-          toast.success('Signed in successfully!')
-          replace('/dashboard')
-        },
         onError: (ctx) => {
           toast.error('Error signing in', {
             description: ctx.error.message,

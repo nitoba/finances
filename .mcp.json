@@ -1,12 +1,12 @@
 {
   "mcpServers": {
-    "Context7": {
+    "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"]
     },
     "taskmaster-ai": {
       "command": "npx",
-      "args": ["-y", "task-master-ai"]
+      "args": ["-y", "--package=task-master-ai", "task-master-ai"]
     }
   }
 }

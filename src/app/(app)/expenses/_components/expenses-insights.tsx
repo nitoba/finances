@@ -1,12 +1,12 @@
 'use client'
+import dayjs from 'dayjs'
 import { ArrowUpRight, Banknote, CreditCard, PieChart } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useServerActionQuery } from '@/hooks/server-action-hooks'
 import { useExpenses } from '@/hooks/use-expenses'
 import { useUser } from '@/hooks/use-user'
-import dayjs from 'dayjs'
-import { Expense } from '@/schemas/expense.schema'
+import type { Expense } from '@/schemas/expense.schema'
 import { getExpensesByMonthAction } from '@/services/actions/expenses.action'
-import { useServerActionQuery } from '@/hooks/server-action-hooks'
 import { LoadingExpenseCards } from './loading-expense-cards'
 
 const previousMonth = dayjs().subtract(1, 'month').toDate().toISOString()
@@ -27,10 +27,10 @@ export function ExpenseInsights() {
     {
       queryKey: ['previous-expenses', previousMonth],
       input: { month: previousMonth },
-    },
+    }
   )
 
-  if (!user || !expenses || isLoading) {
+  if (!(user && expenses) || isLoading) {
     return <LoadingExpenseCards />
   }
 
@@ -41,7 +41,7 @@ export function ExpenseInsights() {
   if (recurringExpenses.length > 0) {
     highestRecurringExpense = recurringExpenses.reduce(
       (max, expense) => (expense.amount > max.amount ? expense : max),
-      recurringExpenses[0],
+      recurringExpenses[0]
     )
   } else {
     highestRecurringExpense = {
@@ -56,7 +56,7 @@ export function ExpenseInsights() {
       acc[expense.category] = (acc[expense.category] || 0) + expense.amount
       return acc
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   )
 
   const previousCategoryTotals = previousExpenses.reduce(
@@ -64,7 +64,7 @@ export function ExpenseInsights() {
       acc[expense.category] = (acc[expense.category] || 0) + expense.amount
       return acc
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   )
 
   const categoryWithHighestVariation = Object.keys(categoryTotals).reduce(
@@ -74,7 +74,7 @@ export function ExpenseInsights() {
         (previousCategoryTotals[category] || 1)
       return variation > max.variation ? { category, variation } : max
     },
-    { category: '', variation: 0 },
+    { category: '', variation: 0 }
   )
 
   // Transação Mais Frequente
@@ -84,14 +84,14 @@ export function ExpenseInsights() {
         (acc[expense.description.toLowerCase()] || 0) + 1
       return acc
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   )
   const mostFrequentTransaction = Object.keys(transactionFrequency).reduce(
     (max, description) =>
       transactionFrequency[description] > transactionFrequency[max]
         ? description
         : max,
-    Object.keys(transactionFrequency)[0],
+    Object.keys(transactionFrequency)[0]
   )
 
   // Gasto Médio por Categoria
@@ -99,10 +99,10 @@ export function ExpenseInsights() {
     (category) => {
       const total = categoryTotals[category]
       const count = expenses.filter(
-        (expense) => expense.category === category,
+        (expense) => expense.category === category
       ).length
       return { category, average: total / count }
-    },
+    }
   )
 
   const insightsData: InsightItem[] = [
@@ -137,7 +137,7 @@ export function ExpenseInsights() {
     <div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {insightsData.map((item) => (
-          <InsightCard key={item.title} item={item} />
+          <InsightCard item={item} key={item.title} />
         ))}
       </div>
     </div>
@@ -152,7 +152,7 @@ function InsightCard({ item }: InsightCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{item.title}</CardTitle>
+        <CardTitle className="font-medium text-sm">{item.title}</CardTitle>
         <item.icon className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
@@ -160,13 +160,13 @@ function InsightCard({ item }: InsightCardProps) {
           <ul className="flex flex-wrap gap-2">
             {item.details.map((detail) => (
               <li
+                className="flex justify-between gap-3 rounded-md bg-gray-100 p-2 text-sm"
                 key={detail.category}
-                className="flex gap-3 justify-between text-sm p-2 bg-gray-100 rounded-md"
               >
                 <span className="font-semibold text-muted-foreground">
                   {detail.category.toUpperCase()}
                 </span>
-                <span className="text-foreground font-bold">
+                <span className="font-bold text-foreground">
                   ${detail.average.toFixed(2)}
                 </span>
               </li>
@@ -174,10 +174,10 @@ function InsightCard({ item }: InsightCardProps) {
           </ul>
         ) : (
           <>
-            <div className="text-2xl font-bold max-w-52 text-balance">
+            <div className="max-w-52 text-balance font-bold text-2xl">
               {item.value}
             </div>
-            <p className="text-xs text-muted-foreground">{item.amount}</p>
+            <p className="text-muted-foreground text-xs">{item.amount}</p>
           </>
         )}
       </CardContent>

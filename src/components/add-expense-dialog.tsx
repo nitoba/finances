@@ -1,5 +1,8 @@
 'use client'
 
+import { PlusCircle } from 'lucide-react'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -8,11 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { PlusCircle } from 'lucide-react'
-import { ExpenseForm } from '../app/(app)/expenses/_components/expense-form'
-import { Button } from '@/components/ui/button'
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { ExpenseForm } from '../app/(app)/expenses/_components/expense-form'
 
 type AddExpenseDialogProps = {
   onAddExpense?: () => void
@@ -26,7 +26,7 @@ export function AddExpenseDialog({
   const [expensiveFormIsOpen, setExpensiveFormIsOpen] = useState(false)
 
   return (
-    <Dialog open={expensiveFormIsOpen} onOpenChange={setExpensiveFormIsOpen}>
+    <Dialog onOpenChange={setExpensiveFormIsOpen} open={expensiveFormIsOpen}>
       <DialogTrigger asChild>
         <Button className={cn('w-fit', className)}>
           Add Expense

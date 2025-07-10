@@ -39,12 +39,12 @@ export function ExpenseTrends() {
         <CardContent>
           <div className="space-y-4">
             {trendData.map((item) => (
-              <div key={item.label} className="flex items-center">
+              <div className="flex items-center" key={item.label}>
                 <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium leading-none">
+                  <p className="font-medium text-sm leading-none">
                     {item.label}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     {item.category}
                   </p>
                 </div>
@@ -72,19 +72,19 @@ export function ExpenseTrends() {
         </CardHeader>
         <CardContent>
           <div className="h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer height="100%" width="100%">
               <PieChart>
                 <Pie
-                  data={categoryData}
                   cx="50%"
                   cy="50%"
+                  data={categoryData}
+                  dataKey="value"
                   innerRadius={60}
                   outerRadius={80}
                   paddingAngle={2}
-                  dataKey="value"
                 >
                   {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell fill={entry.color} key={`cell-${index}`} />
                   ))}
                 </Pie>
               </PieChart>
@@ -93,8 +93,8 @@ export function ExpenseTrends() {
           <div className="mt-4 space-y-2">
             {categoryData.map((category) => (
               <div
-                key={category.name}
                 className="flex items-center justify-between"
+                key={category.name}
               >
                 <div className="flex items-center">
                   <div
@@ -103,7 +103,7 @@ export function ExpenseTrends() {
                   />
                   <span className="text-sm">{category.name}</span>
                 </div>
-                <span className="text-sm font-medium">
+                <span className="font-medium text-sm">
                   {((category.value / totalValue) * 100).toFixed(1)}%
                 </span>
               </div>

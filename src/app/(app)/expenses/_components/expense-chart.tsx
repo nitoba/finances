@@ -31,7 +31,7 @@ export function ExpenseChart() {
       acc[date] += expense.amount
       return acc
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   )
 
   // Converter os dados para o formato necessário pelo gráfico

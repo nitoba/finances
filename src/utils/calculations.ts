@@ -17,7 +17,7 @@ export const calculateDistribution = (salary: number): SalaryDistribution => {
 
 export const calculateCategoryBudgets = (
   distribution: SalaryDistribution,
-  expenses: Expense[],
+  expenses: Expense[]
 ): CategoryBudget[] => {
   const categories: ExpenseCategory[] = [
     'essentials',
@@ -81,7 +81,7 @@ export const calculateWeeklyTrends = (expenses: Expense[]) => {
 }
 
 export const calculateComparisonData = (
-  budgets: CategoryBudget[],
+  budgets: CategoryBudget[]
 ): { name: string; planned: number; actual: number }[] => {
   return budgets.map((budget) => ({
     name: budget.category.charAt(0).toUpperCase() + budget.category.slice(1),
@@ -92,7 +92,7 @@ export const calculateComparisonData = (
 
 export const calculateBalanceProjection = (
   salary: number,
-  expenses: Expense[],
+  expenses: Expense[]
 ): { name: string; balance: number }[] => {
   const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
   const weeklyExpenses = Array(4).fill(0)
@@ -119,7 +119,7 @@ export const calculateTotalIncome = (user: CurrentUser): number => {
 
 export const calculateSavingsRate = (
   totalIncome: number,
-  totalExpenses: number,
+  totalExpenses: number
 ): number => {
   if (totalIncome === 0) {
     throw new Error('Total income cannot be zero')
@@ -130,7 +130,7 @@ export const calculateSavingsRate = (
 export const calculateDiscretionarySpending = (expenses: Expense[]): number => {
   return expenses
     .filter(
-      (expense) => expense.category === 'leisure',
+      (expense) => expense.category === 'leisure'
       // expense.category === 'entertainment' ||
       // expense.category === 'hobbies',
     )
@@ -139,7 +139,7 @@ export const calculateDiscretionarySpending = (expenses: Expense[]): number => {
 
 export const calculateBudgetUtilization = (
   totalExpenses: number,
-  totalBudget: number,
+  totalBudget: number
 ): number => {
   if (totalBudget === 0) {
     throw new Error('Total budget cannot be zero')

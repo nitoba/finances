@@ -27,7 +27,7 @@ export function Dashboard() {
   const queryClient = useQueryClient()
   const { data: expenses, isLoading: isGettingExpenses } = useExpenses()
   const [distribution, setDistribution] = useState<SalaryDistribution | null>(
-    null,
+    null
   )
 
   const { data: salary, isLoading: isGettingSalary } = useServerActionQuery(
@@ -35,11 +35,11 @@ export function Dashboard() {
     {
       queryKey: ['salary'],
       input: undefined,
-    },
+    }
   )
 
   const [selectedMonth, setSelectedMonth] = useState<string>(
-    new Date().toISOString().slice(0, 7),
+    new Date().toISOString().slice(0, 7)
   )
 
   useEffect(() => {
@@ -80,13 +80,13 @@ export function Dashboard() {
   const filteredExpenses =
     expenses?.filter(
       (expense) =>
-        dayjs(expense.date).get('month') === dayjs(selectedMonth).get('month'),
+        dayjs(expense.date).get('month') === dayjs(selectedMonth).get('month')
     ) ?? []
 
   const trendData = calculateWeeklyTrends(filteredExpenses)
   const comparisonData = distribution
     ? calculateComparisonData(
-        calculateCategoryBudgets(distribution, filteredExpenses),
+        calculateCategoryBudgets(distribution, filteredExpenses)
       )
     : []
   const balanceData =
@@ -121,7 +121,7 @@ export function Dashboard() {
               <DashboardBlocks
                 budgets={calculateCategoryBudgets(
                   distribution,
-                  filteredExpenses,
+                  filteredExpenses
                 )}
                 trendData={trendData}
                 comparisonData={comparisonData}

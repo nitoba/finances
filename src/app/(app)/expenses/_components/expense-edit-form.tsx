@@ -1,26 +1,25 @@
-import React from 'react'
-
-import { CalendarIcon } from 'lucide-react'
-
-import { Expense } from '@/schemas/expense.schema'
-import { ExpenseCategory } from '@/schemas/category.schema'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@radix-ui/react-select'
 import dayjs from 'dayjs'
+import { CalendarIcon } from 'lucide-react'
+import React from 'react'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { DialogFooter } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { DialogFooter } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@radix-ui/react-select'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
+import type { ExpenseCategory } from '@/schemas/category.schema'
+import type { Expense } from '@/schemas/expense.schema'
+
 interface ExpenseEditFormProps {
   expense: Expense
   onSave: (expense: Expense) => void
@@ -45,14 +44,14 @@ export function ExpenseEditForm({
       ...expense,
       date: formData.date,
       description: formData.description,
-      amount: parseFloat(formData.amount),
+      amount: Number.parseFloat(formData.amount),
       category: formData.category as ExpenseCategory,
     }
     onSave(updatedExpense)
   }
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -71,72 +70,72 @@ export function ExpenseEditForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 gap-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium" htmlFor="date">
+          <label className="font-medium text-sm" htmlFor="date">
             Date
           </label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                variant={'outline-solid'}
                 className="w-full justify-start text-left font-normal"
+                variant={'outline-solid'}
               >
                 <CalendarIcon />
                 {dayjs(formData.date).format('DD/MM/YYYY')}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent align="start" className="w-auto p-0">
               <Calendar
-                mode="single"
-                selected={new Date(expense.date)}
-                onSelect={handleChangeDate}
                 initialFocus
+                mode="single"
+                onSelect={handleChangeDate}
+                selected={new Date(expense.date)}
               />
             </PopoverContent>
           </Popover>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium" htmlFor="description">
+          <label className="font-medium text-sm" htmlFor="description">
             Description
           </label>
           <Input
             id="description"
             name="description"
-            value={formData.description}
             onChange={handleChange}
             required
+            value={formData.description}
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium" htmlFor="amount">
+          <label className="font-medium text-sm" htmlFor="amount">
             Amount
           </label>
           <Input
             id="amount"
             name="amount"
-            type="number"
-            step="0.01"
-            value={formData.amount}
             onChange={handleChange}
             required
+            step="0.01"
+            type="number"
+            value={formData.amount}
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium" htmlFor="category">
+          <label className="font-medium text-sm" htmlFor="category">
             Category
           </label>
           <Select
-            value={formData.category}
             onValueChange={(value) =>
               handleChange({
                 target: { name: 'category', value },
               } as React.ChangeEvent<HTMLSelectElement>)
             }
+            value={formData.category}
           >
             <SelectTrigger>
               <SelectValue placeholder="Category" />
@@ -153,7 +152,7 @@ export function ExpenseEditForm({
       </div>
 
       <DialogFooter>
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button onClick={onCancel} type="button" variant="outline">
           Cancel
         </Button>
         <Button type="submit">Save changes</Button>

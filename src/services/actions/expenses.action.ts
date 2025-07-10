@@ -27,7 +27,7 @@ export const getExpensesFromUserAction = createServerAction().handler(
       createdAt: dayjs(exp.createdAt).toDate(),
       updatedAt: dayjs(exp.updatedAt).toDate(),
     }))
-  },
+  }
 )
 
 export const createNewExpenseAction = createServerAction()
@@ -84,7 +84,7 @@ export const getExpensesByMonthAction = createServerAction()
   .input(
     z.object({
       month: z.string(),
-    }),
+    })
   )
   .handler(async ({ input }) => {
     const user = await currentUser()
@@ -105,8 +105,8 @@ export const getExpensesByMonthAction = createServerAction()
           and(
             eq(expenses.userId, user.id),
             gt(expenses.createdAt, startDate),
-            lt(expenses.createdAt, endDate),
-          ),
+            lt(expenses.createdAt, endDate)
+          )
         )
 
       return expensesFromDb

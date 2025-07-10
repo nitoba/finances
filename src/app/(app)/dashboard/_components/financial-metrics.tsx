@@ -23,14 +23,14 @@ export function FinancialMetrics() {
   const totalIncome = calculateTotalIncome(user)
   const totalExpenses = expenses.reduce(
     (sum, expense) => sum + expense.amount,
-    0,
+    0
   )
 
   const savingsRate = calculateSavingsRate(totalIncome, totalExpenses)
   const discretionarySpending = calculateDiscretionarySpending(expenses)
   const budgetUtilization = calculateBudgetUtilization(
     totalExpenses,
-    totalIncome,
+    totalIncome
   )
 
   return (

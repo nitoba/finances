@@ -12,7 +12,7 @@ export const saveSalaryAction = createServerAction()
   .input(
     z.object({
       salary: z.number(),
-    }),
+    })
   )
   .handler(async ({ input }) => {
     const user = await currentUser()

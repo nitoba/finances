@@ -72,7 +72,7 @@ export function ExpenseTable() {
               description: 'The expense has been successfully deleted.',
             })
           },
-        },
+        }
       )
     }
   }
@@ -109,7 +109,7 @@ export function ExpenseTable() {
         },
       },
     ],
-    [],
+    []
   )
 
   if (isLoading) return <TableLoading />

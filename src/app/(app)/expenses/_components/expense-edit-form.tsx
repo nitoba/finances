@@ -80,7 +80,7 @@ export function ExpenseEditForm({
             <PopoverTrigger asChild>
               <Button
                 className="w-full justify-start text-left font-normal"
-                variant={'outline-solid'}
+                variant={'outline'}
               >
                 <CalendarIcon />
                 {dayjs(formData.date).format('DD/MM/YYYY')}

@@ -2,15 +2,15 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { toast } from 'sonner'
 import {
-  useServerActionMutation,
-  useServerActionQuery,
-} from './server-action-hooks'
-import {
   createNewExpenseAction,
   deleteExpenseAction,
   getExpensesFromUserAction,
   updateExpenseAction,
 } from '@/services/actions/expenses.action'
+import {
+  useServerActionMutation,
+  useServerActionQuery,
+} from './server-action-hooks'
 
 export const useExpenses = () => {
   return useServerActionQuery(getExpensesFromUserAction, {
@@ -26,8 +26,7 @@ export const useCreateExpense = () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
       toast.success('Despesa criada com sucesso')
     },
-    onError: (error) => {
-      console.error('Erro ao criar despesa:', error)
+    onError: (_error) => {
       toast.error('Erro ao criar despesa')
     },
   })
@@ -40,8 +39,7 @@ export const useUpdateExpense = () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
       toast.success('Despesa atualizada com sucesso')
     },
-    onError: (error) => {
-      console.error('Erro ao atualizar despesa:', error)
+    onError: (_error) => {
       toast.error('Erro ao atualizar despesa')
     },
   })
@@ -54,8 +52,7 @@ export const useDeleteExpense = () => {
       queryClient.invalidateQueries({ queryKey: ['expenses'] })
       toast.success('Despesa excluída com sucesso')
     },
-    onError: (error) => {
-      console.error('Erro ao excluir despesa:', error)
+    onError: (_error) => {
       toast.error('Erro ao excluir despesa')
     },
   })

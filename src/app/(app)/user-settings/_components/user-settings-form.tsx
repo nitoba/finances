@@ -61,9 +61,9 @@ export default function UserSettingsForm() {
   const debouncedImageUrl = useDebounce(watchImageUrl, 300)
 
   function handleSetDefaultValuesToFormAfterUserDataHasLoaded() {
-    form.setValue('name', user!.name)
-    form.setValue('monthlySalary', user!.monthlySalary ?? 0)
-    form.setValue('imageUrl', user!.image ?? '')
+    form.setValue('name', user?.name ?? '')
+    form.setValue('monthlySalary', user?.monthlySalary ?? 0)
+    form.setValue('imageUrl', user?.image ?? '')
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -86,7 +86,7 @@ export default function UserSettingsForm() {
     if (user) {
       handleSetDefaultValuesToFormAfterUserDataHasLoaded()
     }
-  }, [user])
+  }, [user, handleSetDefaultValuesToFormAfterUserDataHasLoaded])
 
   if (isPending || !user) {
     return <UserSettingsFormLoading />

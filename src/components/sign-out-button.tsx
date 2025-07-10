@@ -1,8 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { handleSignOut } from '@/lib/auth/actions.client'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
 
 type Props = {
   children: React.ReactNode

@@ -1,7 +1,7 @@
-import { Expense } from '@/schemas/expense.schema'
-import { CategoryBudget, SalaryDistribution } from '../types/finance'
-import { ExpenseCategory } from '@/schemas/category.schema'
-import { CurrentUser } from '@/hooks/use-user'
+import type { CurrentUser } from '@/hooks/use-user'
+import type { ExpenseCategory } from '@/schemas/category.schema'
+import type { Expense } from '@/schemas/expense.schema'
+import type { CategoryBudget, SalaryDistribution } from '../types/finance'
 
 export const calculateDistribution = (salary: number): SalaryDistribution => {
   const essentialsTotal = salary * 0.7
@@ -95,7 +95,7 @@ export const calculateBalanceProjection = (
   expenses: Expense[]
 ): { name: string; balance: number }[] => {
   const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
-  const weeklyExpenses = Array(4).fill(0)
+  const weeklyExpenses = new Array(4).fill(0)
 
   expenses.forEach((expense) => {
     const week = Math.floor(new Date(expense.date).getDate() / 7)

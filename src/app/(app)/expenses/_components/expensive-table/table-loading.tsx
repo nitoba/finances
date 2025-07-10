@@ -15,8 +15,8 @@ export function TableLoading() {
         <TableHeader>
           <TableRow>
             {Array.from({ length: 5 }).map((_, index) => (
-              <TableHead key={index} className="text-center">
-                <Skeleton className="h-6 w-24 mx-auto" />
+              <TableHead className="text-center" key={index}>
+                <Skeleton className="mx-auto h-6 w-24" />
               </TableHead>
             ))}
           </TableRow>
@@ -25,8 +25,8 @@ export function TableLoading() {
           {Array.from({ length: 5 }).map((_, rowIndex) => (
             <TableRow key={rowIndex}>
               {Array.from({ length: 5 }).map((_, cellIndex) => (
-                <TableCell key={cellIndex} className="text-center">
-                  <Skeleton className="h-6 w-24 mx-auto" />
+                <TableCell className="text-center" key={cellIndex}>
+                  <Skeleton className="mx-auto h-6 w-24" />
                 </TableCell>
               ))}
             </TableRow>

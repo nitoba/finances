@@ -1,11 +1,11 @@
 'use server'
 
+import { eq } from 'drizzle-orm'
+import z from 'zod'
+import { createServerAction, ZSAError } from 'zsa'
+import { currentUser } from '@/lib/auth/current-session.server'
 import { db } from '@/lib/db/db'
 import { users } from '@/lib/db/schemas/auth-schema'
-import { eq } from 'drizzle-orm'
-import { createServerAction, ZSAError } from 'zsa'
-import z from 'zod'
-import { currentUser } from '@/lib/auth/current-session.server'
 import { userProfileSchema } from '@/schemas/user.schema'
 
 export const saveSalaryAction = createServerAction()

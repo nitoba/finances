@@ -1,5 +1,5 @@
-import { auth } from '../auth' // path to your Better Auth server instance
 import { headers } from 'next/headers'
+import { auth } from '../auth' // path to your Better Auth server instance
 
 export async function currentUser() {
   const session = await auth.api.getSession({

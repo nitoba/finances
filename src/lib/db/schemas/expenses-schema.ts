@@ -1,7 +1,7 @@
-import { sqliteTable, text, real, integer } from 'drizzle-orm/sqlite-core'
-import { users } from './auth-schema'
-import { ExpenseCategory } from '@/schemas/category.schema'
 import { sql } from 'drizzle-orm'
+import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import type { ExpenseCategory } from '@/schemas/category.schema'
+import { users } from './auth-schema'
 
 export const expenses = sqliteTable('expenses', {
   id: text('id').primaryKey(),

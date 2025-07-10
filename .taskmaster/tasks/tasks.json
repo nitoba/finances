@@ -1,0 +1,1594 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Project with Next.js and Core Dependencies",
+        "description": "Set up Next.js project with App Router, TypeScript, and core dependencies including Tailwind CSS v4.1.11",
+        "details": "Create Next.js 15 project with App Router and TypeScript. Install core dependencies: @next/typescript, tailwindcss@4.1.11, @types/node, @types/react, @types/react-dom. Configure next.config.js with proper settings for production. Set up TypeScript strict mode configuration. Initialize package.json with proper scripts for dev, build, start, and lint. Configure Tailwind CSS v4.1.11 with proper PostCSS configuration and base styles.",
+        "testStrategy": "Verify project builds successfully, TypeScript compilation works without errors, and Tailwind CSS classes are properly applied. Test dev server startup and basic routing functionality.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Next.js project structure",
+            "description": "Initialize a new Next.js project with the required directory structure and basic files",
+            "dependencies": [],
+            "details": "Run `npx create-next-app@latest` to create the project structure. Set up the basic app directory structure with pages, components, and public folders. Initialize the project with TypeScript support during creation.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Configure TypeScript settings",
+            "description": "Set up TypeScript configuration with proper compiler options and type checking",
+            "dependencies": [
+              1
+            ],
+            "details": "Configure tsconfig.json with appropriate compiler options for Next.js. Set up strict mode, module resolution, and path mapping. Ensure proper integration with Next.js build process.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Install and configure Tailwind CSS v4.1.11",
+            "description": "Install Tailwind CSS version 4.1.11 and configure it for the Next.js project",
+            "dependencies": [
+              2
+            ],
+            "details": "Install Tailwind CSS v4.1.11 using npm/yarn. Configure tailwind.config.js with content paths for Next.js. Set up PostCSS configuration and import Tailwind directives in globals.css.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Set up package.json scripts",
+            "description": "Configure package.json with development, build, and deployment scripts",
+            "dependencies": [
+              3
+            ],
+            "details": "Add scripts for dev, build, start, and lint commands in package.json. Configure scripts for TypeScript checking, Tailwind CSS building, and any additional tooling needed for the project.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Configure next.config.js",
+            "description": "Set up Next.js configuration file with appropriate settings for the project",
+            "dependencies": [
+              4
+            ],
+            "details": "Create next.config.js with proper configuration for TypeScript, Tailwind CSS, and any other project-specific settings. Configure build optimization, image optimization, and any required experimental features.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Verify complete setup works correctly",
+            "description": "Test the entire project setup to ensure all components work together properly",
+            "dependencies": [
+              5
+            ],
+            "details": "Run the development server and verify the project builds without errors. Test TypeScript compilation, Tailwind CSS styling, and all configured scripts. Create a simple test page to verify the complete stack integration.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Configure Database with Turso and Drizzle ORM",
+        "description": "Set up Turso SQLite database with Drizzle ORM for data persistence",
+        "details": "Install Turso SDK (@libsql/client) and Drizzle ORM (drizzle-orm, drizzle-kit). Create database schema using Drizzle schema definition for users, expenses, sessions, accounts, and verifications tables. Configure database connection with proper environment variables. Set up Drizzle migrations system with proper folder structure. Create database utility functions for connection management. Configure Turso cloud database instance with proper authentication tokens.",
+        "testStrategy": "Test database connection establishment, verify schema creation through migrations, test basic CRUD operations, and validate data integrity constraints.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Turso SDK and dependencies",
+            "description": "Install @libsql/client package and related dependencies for Turso database integration",
+            "dependencies": [],
+            "details": "Install @libsql/client package using npm/yarn. Verify compatibility with existing project dependencies and resolve any version conflicts.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Setup Drizzle ORM configuration",
+            "description": "Configure Drizzle ORM with Turso adapter and create initial configuration files",
+            "dependencies": [
+              1
+            ],
+            "details": "Install drizzle-orm and @libsql/drizzle packages. Create drizzle.config.ts file with Turso connection settings and output directory configuration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Design database schema for all tables",
+            "description": "Create comprehensive schema definitions for users, expenses, sessions, accounts, and verifications tables",
+            "dependencies": [
+              2
+            ],
+            "details": "Define table schemas using Drizzle ORM syntax including primary keys, foreign keys, indexes, and constraints. Design relationships between tables with proper referential integrity.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Configure database connection",
+            "description": "Set up database connection utilities and environment configuration",
+            "dependencies": [
+              3
+            ],
+            "details": "Create database connection helper functions using Turso client. Configure environment variables for database URL and auth token. Implement connection pooling and error handling.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Setup migration system",
+            "description": "Implement database migration system using Drizzle Kit",
+            "dependencies": [
+              4
+            ],
+            "details": "Install drizzle-kit and configure migration scripts. Create initial migration files from schema definitions. Set up migration runner and rollback capabilities.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create database utility functions",
+            "description": "Develop reusable database utility functions for common operations",
+            "dependencies": [
+              5
+            ],
+            "details": "Create helper functions for CRUD operations, query builders, transaction management, and data validation. Implement error handling and logging utilities.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Configure cloud database instance",
+            "description": "Set up and configure Turso cloud database instance with proper access controls",
+            "dependencies": [
+              6
+            ],
+            "details": "Create Turso database instance via CLI or dashboard. Configure database settings, replica locations, and access tokens. Set up development and production environments.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement comprehensive testing",
+            "description": "Create test suite for database operations, migrations, and utility functions",
+            "dependencies": [
+              7
+            ],
+            "details": "Write unit tests for database functions, integration tests for migrations, and end-to-end tests for complete workflows. Set up test database and mock data fixtures.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Implement Authentication System with Better Auth",
+        "description": "Set up comprehensive authentication system supporting email/password and Google OAuth",
+        "details": "Install Better Auth (@better-auth/core, @better-auth/next-js) with required plugins. Configure authentication providers (credentials, Google OAuth). Set up authentication middleware for route protection. Create authentication API routes using Better Auth configuration. Implement secure session management with proper cookie settings. Configure Google OAuth with proper client ID and secret. Set up email verification system with token-based verification. Create password reset functionality with secure token generation.",
+        "testStrategy": "Test email/password registration and login, verify Google OAuth flow, test session persistence, validate email verification process, and test password reset functionality.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Better Auth Installation and Configuration",
+            "description": "Install Better Auth package and set up initial configuration files",
+            "dependencies": [],
+            "details": "Install @better-auth/core and required dependencies, create auth configuration file with basic settings, set up environment variables for auth secrets and database connection",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Credentials Provider Setup",
+            "description": "Configure username/password authentication provider",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up credentials provider in Better Auth config, implement password hashing with bcrypt, create user registration and login validation schemas",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Google OAuth Configuration",
+            "description": "Configure Google OAuth 2.0 integration",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up Google OAuth client credentials, configure OAuth provider in Better Auth, implement OAuth callback handling and user profile mapping",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Authentication Middleware Creation",
+            "description": "Create middleware for protecting routes and handling auth state",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Implement authentication middleware for route protection, create session validation logic, add user context injection for protected routes",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "API Routes Implementation",
+            "description": "Create authentication API endpoints for all auth operations",
+            "dependencies": [
+              4
+            ],
+            "details": "Implement login/logout endpoints, registration endpoint, OAuth callback routes, user profile endpoints, and proper error handling for all auth operations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Session Management Setup",
+            "description": "Configure session storage and management system",
+            "dependencies": [
+              5
+            ],
+            "details": "Set up session storage (Redis or database), configure session expiration and refresh logic, implement secure session cookies with proper flags",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Email Verification System",
+            "description": "Implement email verification for new user registrations",
+            "dependencies": [
+              6
+            ],
+            "details": "Create email verification token generation, set up email sending service integration, implement verification endpoints and user activation flow",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Password Reset Functionality",
+            "description": "Implement secure password reset flow via email",
+            "dependencies": [
+              7
+            ],
+            "details": "Create password reset token generation, implement reset request endpoint, create password update endpoint with token validation, set up reset email templates",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Security Configuration",
+            "description": "Configure security measures and rate limiting",
+            "dependencies": [
+              8
+            ],
+            "details": "Implement rate limiting for auth endpoints, configure CSRF protection, set up security headers, implement account lockout after failed attempts",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Comprehensive Testing of All Auth Flows",
+            "description": "Create and run comprehensive tests for all authentication functionality",
+            "dependencies": [
+              9
+            ],
+            "details": "Write unit tests for auth functions, integration tests for all endpoints, test OAuth flows, verify security measures, test email verification and password reset flows",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Create Core UI Components with Shadcn/ui",
+        "description": "Implement reusable UI components using Radix UI primitives and Shadcn/ui",
+        "details": "Install Shadcn/ui CLI and initialize component library. Install Radix UI primitives (@radix-ui/react-dialog, @radix-ui/react-select, @radix-ui/react-toast, etc.). Create core components: Button, Input, Card, Dialog, Select, Toast, Table, Form components. Implement theme provider with dark/light mode support. Create loading states and error boundary components. Set up component variants using class-variance-authority. Configure proper TypeScript interfaces for all components.",
+        "testStrategy": "Test all component variants and states, verify accessibility compliance (ARIA attributes), test keyboard navigation, and validate responsive behavior across different screen sizes.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Shadcn/ui CLI setup and initialization",
+            "description": "Install and configure Shadcn/ui CLI tool for component generation",
+            "dependencies": [],
+            "details": "Install Shadcn/ui CLI, run init command to configure project structure, set up components.json configuration file with proper paths and styling options",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Radix UI primitives installation",
+            "description": "Install required Radix UI primitive packages for component foundation",
+            "dependencies": [
+              1
+            ],
+            "details": "Install core Radix UI packages including Dialog, Select, Toast, and other primitive components that will serve as the foundation for custom components",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Core component development - Button and Input",
+            "description": "Create Button and Input components with proper variants and styling",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Implement Button component with size, variant, and disabled states. Create Input component with validation states, sizing, and proper accessibility attributes",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Core component development - Card and Dialog",
+            "description": "Build Card and Dialog components with proper composition patterns",
+            "dependencies": [
+              3
+            ],
+            "details": "Create Card component with header, content, and footer sections. Implement Dialog component using Radix primitives with proper focus management and animations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Core component development - Select, Toast, Table, Form",
+            "description": "Implement remaining core components for data display and interaction",
+            "dependencies": [
+              4
+            ],
+            "details": "Build Select component with search and multi-select capabilities. Create Toast notification system. Implement Table component with sorting and filtering. Develop Form components with validation",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Theme provider implementation",
+            "description": "Set up theme provider with dark/light mode support",
+            "dependencies": [
+              5
+            ],
+            "details": "Create theme provider context, implement CSS variables for theming, set up dark/light mode toggle functionality with system preference detection",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Loading states and error boundaries",
+            "description": "Implement loading states and error boundary components",
+            "dependencies": [
+              6
+            ],
+            "details": "Create loading spinner and skeleton components, implement error boundary wrapper with fallback UI, add loading states to form components and async operations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Component variants setup and TypeScript interfaces",
+            "description": "Configure component variants system and complete TypeScript definitions",
+            "dependencies": [
+              7
+            ],
+            "details": "Set up class-variance-authority for component variants, create comprehensive TypeScript interfaces for all component props, implement proper type exports and documentation",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Form Validation with React Hook Form and Zod",
+        "description": "Set up form handling and validation system using React Hook Form with Zod schemas",
+        "details": "Install React Hook Form (@hookform/resolvers, react-hook-form) and Zod for validation. Create Zod schemas for user registration, login, expense creation, and profile updates. Implement form components with proper error handling and real-time validation. Set up form hooks for common operations (useForm, useFormState). Create reusable form field components with error display. Implement proper form submission with loading states and error handling. Configure form validation rules for financial data (amounts, dates, categories).",
+        "testStrategy": "Test form validation with various input combinations, verify error messages display correctly, test real-time validation feedback, and validate form submission with proper error handling.",
+        "priority": "high",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install React Hook Form and Zod dependencies",
+            "description": "Install and configure React Hook Form and Zod packages for form validation",
+            "dependencies": [],
+            "details": "Install react-hook-form and zod packages via npm/yarn. Set up TypeScript types and basic configuration for form validation integration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create Zod validation schemas for financial forms",
+            "description": "Define comprehensive Zod schemas for different financial form types",
+            "dependencies": [
+              1
+            ],
+            "details": "Create schemas for transaction forms, budget forms, category forms, and account forms. Include validation rules for amounts, dates, required fields, and format constraints.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement financial data validation rules",
+            "description": "Create specialized validation rules for financial data types",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement custom validators for currency amounts, date ranges, percentage values, and financial category constraints. Add business logic validation for financial operations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Develop reusable form field components",
+            "description": "Create reusable form input components with built-in validation",
+            "dependencies": [
+              1
+            ],
+            "details": "Build components for text inputs, number inputs, date pickers, select dropdowns, and checkboxes. Include error display, loading states, and accessibility features.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create form hooks for common operations",
+            "description": "Implement custom hooks for form state management and validation",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create hooks for form submission, validation state management, error handling, and data transformation. Include hooks for specific financial form types.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Build form components with error handling",
+            "description": "Develop complete form components with comprehensive error handling",
+            "dependencies": [
+              5
+            ],
+            "details": "Create form components for transactions, budgets, categories, and accounts. Implement field-level and form-level error display, validation feedback, and user guidance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement submission handling with loading states",
+            "description": "Add form submission logic with loading indicators and success/error states",
+            "dependencies": [
+              6
+            ],
+            "details": "Implement form submission handlers with loading spinners, success messages, error handling, and form reset functionality. Include optimistic updates and error recovery.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Build User Dashboard with 70/30 Rule Implementation",
+        "description": "Create main dashboard with automatic budget distribution and financial metrics",
+        "details": "Create dashboard layout with responsive grid system. Implement 70/30 budget rule calculation: Essentials (56%), Leisure (14%), Investments (10%), Knowledge (10%), Emergency (10%). Build real-time financial metrics components (savings rate, discretionary spending, budget utilization). Create interactive data visualizations using Chart.js or Recharts. Implement monthly balance projections and spending trend analysis. Add budget vs actual comparison widgets. Create quick action buttons for common tasks.",
+        "testStrategy": "Test budget calculations with various salary inputs, verify real-time metric updates, test chart interactions and responsiveness, and validate mathematical accuracy of all financial calculations.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create responsive dashboard layout structure",
+            "description": "Design and implement the main dashboard layout with responsive grid system and mobile-first approach",
+            "dependencies": [],
+            "details": "Implement CSS Grid or Flexbox layout system with breakpoints for mobile, tablet, and desktop views. Create main container structure with proper spacing and component placement areas.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement 70/30 budget rule calculation engine",
+            "description": "Build the core calculation logic for the 70/30 budget rule with proper validation and error handling",
+            "dependencies": [],
+            "details": "Create functions to calculate 70% needs vs 30% wants allocation, handle edge cases, validate input data, and ensure calculation accuracy with proper rounding.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop financial metrics components",
+            "description": "Create reusable components for displaying key financial metrics like income, expenses, savings rate, and debt-to-income ratio",
+            "dependencies": [
+              1
+            ],
+            "details": "Build metric cards with proper formatting, currency display, percentage calculations, and visual indicators for positive/negative changes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Integrate data visualization charts and graphs",
+            "description": "Implement chart library integration for displaying financial data through various visualization types",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Set up chart library (Chart.js, D3, or similar), create pie charts for budget allocation, line charts for trends, and bar charts for comparisons with proper responsive behavior.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Build monthly balance projection system",
+            "description": "Create functionality to project future monthly balances based on current spending patterns and income",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement projection algorithms using historical data, account for recurring transactions, seasonal variations, and provide confidence intervals for predictions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement spending trend analysis features",
+            "description": "Develop components to analyze and display spending trends over time with category breakdowns",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Create trend analysis algorithms, calculate moving averages, identify spending patterns, and provide insights on category-wise spending changes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create budget vs actual comparison widgets",
+            "description": "Build interactive widgets that compare budgeted amounts against actual spending with visual indicators",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Design comparison charts with progress bars, percentage indicators, over/under budget alerts, and drill-down capabilities for detailed analysis.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement quick action buttons and shortcuts",
+            "description": "Add quick action buttons for common tasks like adding transactions, setting budgets, and generating reports",
+            "dependencies": [
+              1
+            ],
+            "details": "Create floating action buttons or quick access toolbar with shortcuts for frequent user actions, modal dialogs for quick data entry, and keyboard shortcuts.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Comprehensive testing of all dashboard calculations",
+            "description": "Implement thorough testing suite for all financial calculations, edge cases, and user interactions",
+            "dependencies": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "details": "Create unit tests for calculation functions, integration tests for component interactions, edge case testing for boundary conditions, and end-to-end testing for complete user workflows.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Develop Expense Management System",
+        "description": "Implement comprehensive expense tracking with CRUD operations and smart categorization",
+        "details": "Create expense management interface with full CRUD operations. Implement intelligent categorization system for 5 predefined categories (essentials, leisure, investments, knowledge, emergency). Build expense form with date picker, amount input, description field, and category selection. Add support for recurring expenses with proper scheduling. Implement advanced filtering and search capabilities. Create bulk operations for importing/exporting CSV data. Add expense validation and duplicate detection.",
+        "testStrategy": "Test all CRUD operations, verify categorization accuracy, test recurring expense scheduling, validate CSV import/export functionality, and test search and filtering capabilities.",
+        "priority": "high",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement basic CRUD operations for expenses",
+            "description": "Create, read, update, and delete operations for expense records with proper API endpoints and database integration",
+            "dependencies": [],
+            "details": "Set up expense model, database schema, API routes for POST/GET/PUT/DELETE operations, and basic error handling",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop intelligent expense categorization system",
+            "description": "Build automated categorization logic that learns from user patterns and suggests categories for new expenses",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement machine learning or rule-based categorization, category management, and user feedback integration",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create comprehensive expense form with validation",
+            "description": "Design and implement user-friendly expense entry form with real-time validation and error handling",
+            "dependencies": [
+              1
+            ],
+            "details": "Build form components, implement field validation, date pickers, amount formatting, and category selection",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement recurring expense functionality",
+            "description": "Add support for recurring expenses with flexible scheduling and automated generation",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Create recurring expense templates, scheduling system, automatic generation logic, and management interface",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Build advanced filtering and search capabilities",
+            "description": "Implement comprehensive filtering options and search functionality for expense records",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Add date range filters, category filters, amount filters, text search, and saved search functionality",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Develop bulk operations with CSV import/export",
+            "description": "Create functionality for bulk expense operations including CSV import, export, and batch updates",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Implement CSV parsing, data validation, error reporting, export formatting, and progress tracking",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement comprehensive expense validation system",
+            "description": "Build robust validation logic for expense data integrity and business rules",
+            "dependencies": [
+              1
+            ],
+            "details": "Create validation rules for amounts, dates, categories, required fields, and business logic constraints",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Add duplicate detection and prevention",
+            "description": "Implement system to detect and prevent duplicate expense entries with user confirmation",
+            "dependencies": [
+              1,
+              7
+            ],
+            "details": "Build duplicate detection algorithms, user confirmation dialogs, and merge/ignore options",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Create Data Visualization Components",
+        "description": "Build interactive charts and graphs for financial data visualization",
+        "details": "Install Chart.js or Recharts for data visualization. Create pie charts for expense distribution by category. Build bar charts for budget vs actual comparisons. Implement line charts for weekly spending trends. Create progress indicators for budget utilization. Add interactive tooltips and drill-down capabilities. Implement chart export functionality. Create responsive chart components that adapt to different screen sizes.",
+        "testStrategy": "Test chart rendering with various data sets, verify interactive features work correctly, test responsive behavior, and validate chart export functionality.",
+        "priority": "medium",
+        "dependencies": [
+          6,
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and configure Chart.js/Recharts library",
+            "description": "Set up the chosen charting library with proper configuration and dependencies",
+            "dependencies": [],
+            "details": "Install Chart.js or Recharts library via npm/yarn, configure webpack/bundler settings if needed, set up basic chart components and ensure compatibility with the React project structure",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement pie chart for expense distribution",
+            "description": "Create pie chart component to visualize expense categories and their proportions",
+            "dependencies": [
+              1
+            ],
+            "details": "Build reusable pie chart component that takes expense data and displays category breakdown with proper labels, colors, and percentages. Include legend and category filtering capabilities",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create bar chart for budget comparisons",
+            "description": "Develop bar chart component to compare budgeted vs actual amounts across categories",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement horizontal or vertical bar chart showing budget vs actual spending per category. Include color coding for over/under budget situations and proper axis labels",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Develop line chart for trend analysis",
+            "description": "Build line chart component to show spending trends over time periods",
+            "dependencies": [
+              1
+            ],
+            "details": "Create line chart that displays spending patterns across months/weeks with multiple data series support. Include time period selection and smooth curve interpolation",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement progress indicators and gauges",
+            "description": "Add progress bars and gauge charts for budget utilization tracking",
+            "dependencies": [
+              1
+            ],
+            "details": "Create circular progress indicators and linear progress bars showing budget consumption percentages. Include color-coded warnings for approaching budget limits",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add interactive tooltips and drill-down functionality",
+            "description": "Implement hover tooltips and clickable chart elements for detailed data exploration",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Add interactive tooltips showing detailed information on hover, implement click handlers for drilling down into specific data points, and create modal or sidebar details views",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement chart export and responsive design",
+            "description": "Add export functionality and ensure charts are responsive across all device sizes",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Implement PNG/PDF export capabilities for charts, ensure responsive design with proper scaling on mobile devices, and add print-friendly styling options",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement Real-time Financial Analytics",
+        "description": "Build automated financial calculations and pattern recognition system",
+        "details": "Create financial calculation engine for automatic budget distribution based on salary. Implement spending pattern recognition algorithms. Build weekly trend analysis with projection capabilities. Create budget alert system with customizable thresholds. Implement comparative analysis (planned vs actual spending). Add financial health scoring system. Create automated insights generation based on spending patterns.",
+        "testStrategy": "Test calculation accuracy with various scenarios, verify pattern recognition algorithms, test alert system functionality, and validate insight generation quality.",
+        "priority": "medium",
+        "dependencies": [
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Financial Calculation Engine Development",
+            "description": "Build core financial calculation engine with support for income, expenses, balances, and mathematical operations",
+            "dependencies": [],
+            "details": "Implement mathematical functions for financial calculations including percentage calculations, compound interest, net worth calculations, and currency conversions. Create a robust engine that can handle various financial data types and operations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Spending Pattern Recognition Algorithms",
+            "description": "Develop algorithms to identify and categorize spending patterns from transaction data",
+            "dependencies": [
+              1
+            ],
+            "details": "Create machine learning or statistical algorithms to recognize recurring spending patterns, categorize transactions automatically, and identify spending behaviors. Include pattern matching for merchant names, amounts, and frequency.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Weekly Trend Analysis with Projections",
+            "description": "Implement weekly trend analysis system with future spending projections",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Build trend analysis algorithms that can identify weekly spending patterns and project future trends. Include statistical models for forecasting and confidence intervals for predictions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Budget Alert System with Thresholds",
+            "description": "Create configurable budget alert system with customizable thresholds and notifications",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Implement a flexible alert system that can monitor spending against budgets, send notifications when thresholds are exceeded, and provide configurable warning levels. Include support for different budget periods and categories.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Comparative Analysis Features",
+            "description": "Build comparative analysis tools for period-over-period and category comparisons",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Create comparison features that allow users to compare spending across different time periods, categories, and metrics. Include visualizations and statistical significance testing for comparisons.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Financial Health Scoring System",
+            "description": "Develop comprehensive financial health scoring algorithm with weighted metrics",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Create a scoring system that evaluates financial health based on multiple factors including debt-to-income ratio, savings rate, spending patterns, and budget adherence. Include weighted scoring and personalized recommendations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Automated Insights Generation",
+            "description": "Build system to automatically generate actionable financial insights and recommendations",
+            "dependencies": [
+              2,
+              3,
+              5,
+              6
+            ],
+            "details": "Implement natural language generation system that can create personalized insights based on user's financial data, spending patterns, and health scores. Include actionable recommendations and explanations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Real-time Data Processing",
+            "description": "Implement real-time data processing pipeline for live financial analytics",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Build real-time processing system that can handle streaming financial data, update calculations instantly, and trigger alerts immediately. Include event-driven architecture and efficient data streaming.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Performance Optimization",
+            "description": "Optimize all analytics algorithms for speed and efficiency with large datasets",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "details": "Implement performance optimizations including algorithm efficiency improvements, database query optimization, caching strategies, and parallel processing. Include profiling and benchmarking.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Comprehensive Testing of All Algorithms",
+            "description": "Create comprehensive test suite for all analytics algorithms and features",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "details": "Develop unit tests, integration tests, and performance tests for all analytics components. Include test data generation, edge case testing, and automated testing pipeline with continuous integration.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Build Responsive Sidebar Navigation",
+        "description": "Create collapsible sidebar navigation with mobile-first responsive design",
+        "details": "Create collapsible sidebar component with smooth animations. Implement mobile-first responsive design with proper breakpoints. Add navigation icons and active state indicators. Create breadcrumb navigation for deep pages. Implement keyboard navigation support. Add search functionality within navigation. Create user profile dropdown with quick actions. Implement proper ARIA attributes for accessibility.",
+        "testStrategy": "Test navigation across different screen sizes, verify keyboard navigation, test accessibility compliance, and validate smooth animations and transitions.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create collapsible sidebar component",
+            "description": "Build a reusable sidebar component with expand/collapse functionality",
+            "dependencies": [],
+            "details": "Implement a sidebar component that can toggle between expanded and collapsed states. Include smooth animations and proper state management for the collapsed/expanded state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement mobile-first responsive design",
+            "description": "Ensure navigation works across all device sizes with mobile-first approach",
+            "dependencies": [
+              1
+            ],
+            "details": "Create responsive breakpoints and layouts that work from mobile up to desktop. Handle touch interactions and ensure proper spacing on small screens.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add navigation icons and active states",
+            "description": "Implement visual indicators for navigation items including icons and active states",
+            "dependencies": [
+              1
+            ],
+            "details": "Add appropriate icons for each navigation item and implement visual feedback for active/current page states. Include hover states and proper contrast ratios.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Build breadcrumb navigation",
+            "description": "Create breadcrumb component to show user's current location in the app hierarchy",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Implement breadcrumb navigation that dynamically updates based on current route. Include proper linking and truncation for long paths.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add keyboard navigation support",
+            "description": "Implement full keyboard navigation for accessibility",
+            "dependencies": [
+              3
+            ],
+            "details": "Enable tab navigation, arrow key navigation for menu items, and proper focus management. Ensure all interactive elements are keyboard accessible.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement search functionality and user profile dropdown",
+            "description": "Add search within navigation and user profile dropdown with accessibility compliance",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Create search functionality for navigation items and implement user profile dropdown with proper ARIA labels, focus management, and screen reader support. Ensure full WCAG compliance.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Implement User Profile Management",
+        "description": "Create user profile interface with salary configuration and account settings",
+        "details": "Create profile management interface with user information editing. Implement salary configuration with validation and budget recalculation. Build account settings with email verification and password change. Create profile picture upload functionality. Implement account deletion with proper data cleanup. Add export user data functionality for LGPD compliance. Create notification preferences management.",
+        "testStrategy": "Test profile updates with validation, verify salary changes trigger budget recalculation, test account deletion process, and validate data export functionality.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Profile Interface Development",
+            "description": "Create the main profile interface with user information display and editing capabilities",
+            "dependencies": [],
+            "details": "Build React components for profile view and edit modes, including form handling for personal information, contact details, and basic user data. Implement responsive design and accessibility features.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Salary Configuration with Validation",
+            "description": "Implement salary input fields with comprehensive validation and formatting",
+            "dependencies": [
+              1
+            ],
+            "details": "Add salary configuration forms with input validation, currency formatting, salary range validation, and integration with financial calculation systems. Include error handling and user feedback.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Account Settings Implementation",
+            "description": "Develop comprehensive account settings management interface",
+            "dependencies": [
+              1
+            ],
+            "details": "Create settings panels for account preferences, security settings, privacy controls, and general configuration options. Implement settings persistence and validation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Profile Picture Upload Functionality",
+            "description": "Build profile picture upload system with image processing and validation",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement file upload component with image preview, size/format validation, image cropping/resizing, and secure file storage. Include fallback avatars and error handling.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Account Deletion with Data Cleanup",
+            "description": "Create secure account deletion process with complete data cleanup",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Implement account deletion workflow with confirmation steps, data anonymization, related data cleanup, and audit logging. Ensure compliance with data protection regulations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Data Export for LGPD Compliance",
+            "description": "Develop data export functionality to comply with LGPD requirements",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Create data export system allowing users to download their personal data in structured formats (JSON/CSV). Include all user data, transaction history, and profile information with proper formatting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Notification Preferences Management",
+            "description": "Build notification settings interface for managing user communication preferences",
+            "dependencies": [
+              3
+            ],
+            "details": "Create notification preferences panel with granular controls for email, push, and in-app notifications. Implement preference persistence and integration with notification systems.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Add Advanced Search and Filtering",
+        "description": "Implement comprehensive search and filtering system for expenses and data",
+        "details": "Create advanced search interface with multiple filter options. Implement date range filtering with preset options. Add category-based filtering with multi-select capabilities. Create amount range filtering with visual sliders. Implement full-text search for expense descriptions. Add saved search functionality. Create export filtered results feature. Implement search result pagination and sorting.",
+        "testStrategy": "Test search functionality with various query types, verify filtering accuracy, test performance with large datasets, and validate export functionality.",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Advanced Search Interface Development",
+            "description": "Create a comprehensive search interface with intuitive controls and real-time feedback",
+            "dependencies": [],
+            "details": "Design and implement the main search interface component with search input field, filter toggles, and results preview. Include responsive design and accessibility features.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Date Range Filtering with Presets",
+            "description": "Implement date range selection with common preset options",
+            "dependencies": [
+              1
+            ],
+            "details": "Add date picker components with preset options like 'Last 7 days', 'Last month', 'This year', and custom range selection. Include date validation and formatting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Category-based Multi-select Filtering",
+            "description": "Build multi-select dropdown for category filtering",
+            "dependencies": [
+              1
+            ],
+            "details": "Create category filter component with checkbox-style multi-selection, select all/none options, and visual indicators for selected categories. Support dynamic category loading.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Amount Range Filtering with Visual Sliders",
+            "description": "Implement dual-range slider for amount filtering",
+            "dependencies": [
+              1
+            ],
+            "details": "Add range slider component with min/max amount selection, visual indicators, and input fields for precise values. Include currency formatting and validation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Full-text Search Implementation",
+            "description": "Develop comprehensive text search functionality",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement full-text search across transaction descriptions, notes, and metadata. Include fuzzy matching, highlighting of search terms, and search suggestions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Saved Search Functionality",
+            "description": "Allow users to save and manage search configurations",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Create functionality to save search criteria combinations, name them, and quickly apply saved searches. Include management interface for editing and deleting saved searches.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Export Filtered Results",
+            "description": "Implement export functionality for filtered search results",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Add export options for filtered results in multiple formats (CSV, PDF, Excel). Include customizable export fields and formatting options.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Pagination with Sorting",
+            "description": "Implement pagination and sorting for search results",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Add pagination controls with configurable page sizes and sorting options by date, amount, category, etc. Include performance optimization for large result sets.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Data Import/Export Features",
+        "description": "Build CSV import/export functionality for expense data management",
+        "details": "Create CSV import interface with file upload and validation. Implement data mapping for different CSV formats. Build export functionality with customizable date ranges and filters. Add template download for proper CSV format. Implement duplicate detection during import. Create import history and rollback functionality. Add progress indicators for large file processing. Implement error handling and validation reports.",
+        "testStrategy": "Test CSV import with various file formats, verify data validation accuracy, test export functionality with different filters, and validate error handling for malformed data.",
+        "priority": "medium",
+        "dependencies": [
+          7,
+          12
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement CSV import interface with file upload",
+            "description": "Create a user interface for uploading CSV files with drag-and-drop functionality and file validation",
+            "dependencies": [],
+            "details": "Build a file upload component that accepts CSV files, validates file type and size, provides visual feedback during upload, and handles basic file parsing errors. Include drag-and-drop zone and file selection button.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Build data mapping system for different formats",
+            "description": "Create a flexible data mapping interface that allows users to map CSV columns to database fields",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement column mapping UI where users can match CSV headers to expected data fields, handle different data types, provide preview of mapped data, and save mapping templates for reuse.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop export functionality with filters",
+            "description": "Create export system that allows users to export data with various filtering options",
+            "dependencies": [],
+            "details": "Build export interface with filter options (date ranges, categories, status), format selection (CSV, Excel, JSON), and batch export capabilities. Include data sanitization and formatting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create template download feature",
+            "description": "Implement functionality to download pre-configured CSV templates",
+            "dependencies": [],
+            "details": "Generate downloadable CSV templates with proper headers, sample data, and formatting guidelines. Include multiple template types for different data categories.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement duplicate detection during import",
+            "description": "Build system to detect and handle duplicate records during CSV import process",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create duplicate detection logic based on configurable criteria, provide user options for handling duplicates (skip, update, create new), and display duplicate summary before final import.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Build import history and rollback system",
+            "description": "Create system to track import operations and provide rollback functionality",
+            "dependencies": [
+              1,
+              2,
+              5
+            ],
+            "details": "Store import metadata and change logs, provide import history view with details, implement rollback functionality to undo imports, and include audit trail for compliance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Add progress indicators for large files",
+            "description": "Implement real-time progress tracking for large file imports and exports",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Create progress bars and status indicators for file processing, implement chunked processing for large files, provide estimated time remaining, and allow cancellation of long-running operations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement comprehensive error handling",
+            "description": "Build robust error handling system for all import/export operations",
+            "dependencies": [
+              1,
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "details": "Create centralized error handling with detailed error messages, validation error reporting with line numbers, user-friendly error display, error logging for debugging, and recovery suggestions for common issues.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Add Performance Optimization and Caching",
+        "description": "Implement caching strategies and performance optimizations for optimal user experience",
+        "details": "Implement TanStack Query for data fetching and caching. Add React.memo and useMemo for component optimization. Implement virtual scrolling for large expense lists. Create service worker for offline functionality. Add database query optimization with proper indexing. Implement lazy loading for charts and heavy components. Create performance monitoring with Web Vitals tracking. Add image optimization and compression.",
+        "testStrategy": "Test performance metrics against requirements (LCP < 2.5s, FCP < 1.5s), verify caching functionality, test offline capabilities, and validate virtual scrolling performance.",
+        "priority": "medium",
+        "dependencies": [
+          6,
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement TanStack Query for data fetching",
+            "description": "Replace existing data fetching with TanStack Query to enable caching, background updates, and optimistic updates",
+            "dependencies": [],
+            "details": "Set up TanStack Query client, configure query cache, implement query hooks for all API endpoints, add mutation handlers with optimistic updates, and configure stale-while-revalidate behavior",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement React optimization with memo and useMemo",
+            "description": "Optimize React components using React.memo, useMemo, and useCallback to prevent unnecessary re-renders",
+            "dependencies": [],
+            "details": "Analyze component render patterns, wrap expensive components with React.memo, memoize expensive calculations with useMemo, optimize callback functions with useCallback, and implement component profiling",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add virtual scrolling for large lists",
+            "description": "Implement virtual scrolling to handle large datasets efficiently without rendering all items",
+            "dependencies": [],
+            "details": "Choose virtual scrolling library (react-window or react-virtualized), implement virtual list components, handle dynamic item heights, add scroll-to-item functionality, and optimize for mobile devices",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement service worker for offline functionality",
+            "description": "Add service worker to enable offline capability and background sync",
+            "dependencies": [],
+            "details": "Set up service worker registration, implement cache strategies for static assets, add offline fallback pages, implement background sync for form submissions, and handle cache updates",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Optimize database queries and indexing",
+            "description": "Improve database performance through query optimization and proper indexing",
+            "dependencies": [],
+            "details": "Analyze slow queries, add database indexes for frequently queried fields, implement query pagination, optimize JOIN operations, and add query result caching",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement lazy loading for components and routes",
+            "description": "Add lazy loading for components and routes to reduce initial bundle size",
+            "dependencies": [],
+            "details": "Implement React.lazy and Suspense for component lazy loading, set up route-based code splitting, add loading states and error boundaries, and optimize bundle splitting strategies",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Set up performance monitoring with Web Vitals",
+            "description": "Implement comprehensive performance monitoring using Web Vitals metrics",
+            "dependencies": [],
+            "details": "Install web-vitals library, set up monitoring for Core Web Vitals (LCP, FID, CLS), implement performance analytics reporting, add custom performance metrics, and set up alerting for performance regressions",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement image optimization strategies",
+            "description": "Optimize images for better loading performance and reduced bandwidth usage",
+            "dependencies": [],
+            "details": "Implement responsive images with different sizes, add WebP format support with fallbacks, implement lazy loading for images, optimize image compression settings, and add image CDN integration",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Create comprehensive performance testing suite",
+            "description": "Develop automated performance testing to monitor and validate optimization improvements",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "details": "Set up Lighthouse CI for automated audits, implement performance regression tests, create load testing scenarios, add performance benchmarks, and integrate performance testing into CI/CD pipeline",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 15,
+        "title": "Implement Security Measures and LGPD Compliance",
+        "description": "Add comprehensive security features and ensure LGPD compliance for data protection",
+        "details": "Implement CSRF protection using Next.js built-in features. Add input sanitization and validation for all user inputs. Create secure session management with proper cookie settings. Implement rate limiting for API endpoints. Add Content Security Policy headers. Create data encryption for sensitive information. Implement audit logging for security events. Add LGPD compliance features (data portability, right to be forgotten, consent management). Create security headers configuration.",
+        "testStrategy": "Conduct security audit testing, verify CSRF protection, test rate limiting functionality, validate data encryption, and ensure LGPD compliance requirements are met.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement CSRF Protection Setup",
+            "description": "Configure Cross-Site Request Forgery protection mechanisms including token generation, validation, and secure cookie handling",
+            "dependencies": [],
+            "details": "Set up CSRF middleware with secure token generation, implement double-submit cookie pattern, configure SameSite cookie attributes, and add CSRF token validation to all state-changing requests",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Input Sanitization and Validation",
+            "description": "Create comprehensive input validation and sanitization system for all user inputs and API endpoints",
+            "dependencies": [],
+            "details": "Implement server-side validation schemas, sanitize user inputs against XSS and injection attacks, validate file uploads, and create reusable validation middleware for consistent input handling",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure Secure Session Management",
+            "description": "Set up secure session handling with proper configuration and security measures",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement secure session storage, configure session timeout policies, set secure cookie flags, implement session regeneration on privilege changes, and add session invalidation mechanisms",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement API Rate Limiting",
+            "description": "Configure rate limiting mechanisms to prevent abuse and ensure API stability",
+            "dependencies": [
+              2
+            ],
+            "details": "Set up sliding window rate limiting, implement per-user and per-IP rate limits, configure different limits for different endpoints, add rate limit headers, and implement proper error responses",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Configure Content Security Policy Headers",
+            "description": "Implement comprehensive CSP headers to prevent XSS and other injection attacks",
+            "dependencies": [
+              2
+            ],
+            "details": "Define strict CSP policies, configure nonce-based script execution, set up trusted domains for resources, implement CSP reporting, and test CSP compatibility across different browsers",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Data Encryption for Sensitive Information",
+            "description": "Set up encryption systems for sensitive data at rest and in transit",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement AES encryption for sensitive database fields, configure TLS for all communications, set up key management system, encrypt personal identification data, and implement secure key rotation policies",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Develop Audit Logging System",
+            "description": "Create comprehensive audit logging for security events and user actions",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Implement structured logging for authentication events, track data access and modifications, log security violations, set up log retention policies, and configure secure log storage with integrity verification",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement LGPD Compliance Features",
+            "description": "Build features to comply with Brazilian General Data Protection Law requirements",
+            "dependencies": [
+              6,
+              7
+            ],
+            "details": "Implement data portability endpoints, create right to be forgotten functionality, build consent management system, add data processing transparency features, and implement user data request workflows",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Configure Security Headers",
+            "description": "Set up comprehensive security headers to protect against common web vulnerabilities",
+            "dependencies": [
+              5
+            ],
+            "details": "Configure HSTS headers, implement X-Frame-Options, set X-Content-Type-Options, configure Referrer-Policy, implement Permissions-Policy, and add security headers validation middleware",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Implement Comprehensive Security Testing",
+            "description": "Create automated security testing suite and penetration testing procedures",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "details": "Set up automated security scanning, implement OWASP ZAP integration, create security unit tests, configure dependency vulnerability scanning, perform manual penetration testing, and establish security testing CI/CD pipeline",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-10T14:37:48.275Z",
+      "updated": "2025-07-10T14:53:49.733Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

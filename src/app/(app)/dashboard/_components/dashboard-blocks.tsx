@@ -1,11 +1,11 @@
-import { CategoryBudget } from '@/types/finance'
-import { BudgetPieChart } from './charts/budget-pie-chart'
-import { BudgetBarChart } from './charts/budget-bar-chart'
-import { TrendLineChart } from './charts/trend-line-chart'
+import type { CategoryBudget } from '@/types/finance'
 import { BalanceAreaChart } from './charts/aread-chart'
+import { BudgetBarChart } from './charts/budget-bar-chart'
+import { BudgetPieChart } from './charts/budget-pie-chart'
+import { TrendLineChart } from './charts/trend-line-chart'
 import { BudgetStatusCards } from './componente'
-import { FinancialMetrics } from './financial-metrics'
 import { ExpenseRankings } from './expense-ranking'
+import { FinancialMetrics } from './financial-metrics'
 
 interface DashboardProps {
   budgets: CategoryBudget[]
@@ -31,15 +31,15 @@ export function DashboardBlocks({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
         <BudgetBarChart budgets={budgets} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
         <TrendLineChart data={trendData} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
         <BalanceAreaChart data={balanceData} />
       </div>
     </div>

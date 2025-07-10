@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import {
   Select,
   SelectContent,
@@ -5,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import dayjs from 'dayjs'
 
 interface MonthSelectorProps {
   selectedMonth: string
@@ -29,15 +29,15 @@ export function MonthSelector({
   return (
     <div className="mb-4">
       <label
+        className="block font-medium text-gray-700 text-sm"
         htmlFor="month"
-        className="block text-sm font-medium text-gray-700"
       >
         Select Month
       </label>
       <Select
         name="month"
-        value={selectedMonth}
         onValueChange={handleMonthChange}
+        value={selectedMonth}
       >
         <SelectTrigger>
           <SelectValue placeholder="Month" />

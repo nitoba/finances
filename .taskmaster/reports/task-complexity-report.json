@@ -1,0 +1,133 @@
+{
+	"meta": {
+		"generatedAt": "2025-07-10T14:39:35.250Z",
+		"tasksAnalyzed": 15,
+		"totalTasks": 15,
+		"analysisCount": 15,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Initialize Project with Next.js and Core Dependencies",
+			"complexityScore": 4,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the Next.js project initialization into specific setup steps: create project structure, configure TypeScript, install and configure Tailwind CSS v4.1.11, set up package.json scripts, configure next.config.js, and verify the complete setup works correctly.",
+			"reasoning": "Standard project setup with well-documented tools. Multiple configuration files need proper setup but follows established patterns."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Configure Database with Turso and Drizzle ORM",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Structure the database setup into: Turso SDK installation, Drizzle ORM setup, schema design for all tables (users, expenses, sessions, accounts, verifications), database connection configuration, migration system setup, utility functions creation, cloud database instance configuration, and comprehensive testing.",
+			"reasoning": "Complex database setup involving multiple technologies, schema design, and cloud configuration. Requires careful planning of relationships and migrations."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Implement Authentication System with Better Auth",
+			"complexityScore": 8,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Divide authentication implementation into: Better Auth installation and configuration, credentials provider setup, Google OAuth configuration, authentication middleware creation, API routes implementation, session management setup, email verification system, password reset functionality, security configuration, and comprehensive testing of all auth flows.",
+			"reasoning": "Highly complex authentication system with multiple providers, security considerations, and integration points. Critical for application security."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Create Core UI Components with Shadcn/ui",
+			"complexityScore": 6,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down UI component creation into: Shadcn/ui CLI setup, Radix UI primitives installation, core component development (Button, Input, Card, Dialog, Select, Toast, Table, Form), theme provider implementation, loading states and error boundaries, component variants setup, and TypeScript interface configuration.",
+			"reasoning": "Moderate complexity involving multiple UI libraries and component systems. Requires attention to accessibility and theming."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implement Form Validation with React Hook Form and Zod",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Structure form validation into: React Hook Form and Zod installation, Zod schema creation for different forms, form component development with error handling, form hooks implementation, reusable form field components, submission handling with loading states, and financial data validation rules.",
+			"reasoning": "Moderate complexity with multiple form types and validation scenarios. Requires careful schema design and error handling."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Build User Dashboard with 70/30 Rule Implementation",
+			"complexityScore": 8,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Divide dashboard development into: responsive layout creation, 70/30 budget rule calculation engine, financial metrics components development, data visualization integration, monthly balance projections, spending trend analysis, budget vs actual comparison widgets, quick action buttons, and comprehensive testing of all calculations.",
+			"reasoning": "High complexity involving financial calculations, data visualization, and real-time metrics. Core business logic requires precision."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Develop Expense Management System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Break down expense management into: CRUD operations implementation, intelligent categorization system, expense form development, recurring expense functionality, advanced filtering and search, bulk operations (CSV import/export), expense validation, and duplicate detection.",
+			"reasoning": "Complex CRUD system with advanced features like categorization, recurring expenses, and bulk operations. Requires careful data handling."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Create Data Visualization Components",
+			"complexityScore": 5,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Structure visualization development into: Chart.js/Recharts installation, pie chart implementation for expense distribution, bar chart creation for budget comparisons, line chart development for trends, progress indicators, interactive tooltips and drill-down, chart export functionality, and responsive design implementation.",
+			"reasoning": "Moderate complexity with established charting libraries. Requires attention to interactivity and responsiveness."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Implement Real-time Financial Analytics",
+			"complexityScore": 9,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Divide analytics implementation into: financial calculation engine development, spending pattern recognition algorithms, weekly trend analysis with projections, budget alert system with thresholds, comparative analysis features, financial health scoring system, automated insights generation, real-time data processing, performance optimization, and comprehensive testing of all algorithms.",
+			"reasoning": "Very high complexity involving advanced algorithms, pattern recognition, and real-time processing. Requires sophisticated mathematical calculations."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Build Responsive Sidebar Navigation",
+			"complexityScore": 4,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Structure navigation development into: collapsible sidebar component creation, mobile-first responsive design implementation, navigation icons and active states, breadcrumb navigation, keyboard navigation support, search functionality within navigation, user profile dropdown, and accessibility compliance.",
+			"reasoning": "Standard navigation component with responsive design. Well-established patterns with moderate complexity for accessibility."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Implement User Profile Management",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Break down profile management into: profile interface development, salary configuration with validation, account settings implementation, profile picture upload functionality, account deletion with data cleanup, data export for LGPD compliance, and notification preferences management.",
+			"reasoning": "Moderate complexity with multiple profile features and compliance requirements. Requires careful data handling and validation."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Add Advanced Search and Filtering",
+			"complexityScore": 6,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Structure search and filtering into: advanced search interface development, date range filtering with presets, category-based multi-select filtering, amount range filtering with visual sliders, full-text search implementation, saved search functionality, export filtered results, and pagination with sorting.",
+			"reasoning": "Moderate complexity with multiple filter types and search capabilities. Requires performance optimization for large datasets."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Implement Data Import/Export Features",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Divide import/export functionality into: CSV import interface with file upload, data mapping for different formats, export functionality with filters, template download feature, duplicate detection during import, import history and rollback, progress indicators for large files, and comprehensive error handling.",
+			"reasoning": "Complex data processing with multiple file formats and validation requirements. Requires robust error handling and user feedback."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Add Performance Optimization and Caching",
+			"complexityScore": 8,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Structure performance optimization into: TanStack Query implementation, React optimization (memo, useMemo), virtual scrolling for large lists, service worker for offline functionality, database query optimization, lazy loading implementation, performance monitoring with Web Vitals, image optimization, and comprehensive performance testing.",
+			"reasoning": "High complexity involving multiple optimization strategies and performance monitoring. Requires deep understanding of React and web performance."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Implement Security Measures and LGPD Compliance",
+			"complexityScore": 9,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Break down security implementation into: CSRF protection setup, input sanitization and validation, secure session management, rate limiting for APIs, Content Security Policy headers, data encryption for sensitive information, audit logging system, LGPD compliance features (data portability, right to be forgotten, consent management), security headers configuration, and comprehensive security testing.",
+			"reasoning": "Very high complexity involving multiple security layers and compliance requirements. Critical for application security and legal compliance."
+		}
+	]
+}

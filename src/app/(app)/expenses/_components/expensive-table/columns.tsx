@@ -1,8 +1,8 @@
 'use client'
 
-import { Expense } from '@/schemas/expense.schema'
-import { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import dayjs from 'dayjs'
+import type { Expense } from '@/schemas/expense.schema'
 
 export const columns: ColumnDef<Expense>[] = [
   {
@@ -26,8 +26,7 @@ export const columns: ColumnDef<Expense>[] = [
       const category = row.getValue('category') as string
       return (
         <span
-          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-          ${
+          className={`inline-flex rounded-full px-2 font-semibold text-xs leading-5 ${
             category === 'essentials'
               ? 'bg-blue-100 text-blue-800'
               : category === 'leisure'

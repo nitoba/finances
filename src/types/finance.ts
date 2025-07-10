@@ -1,4 +1,4 @@
-import { ExpenseCategory } from '@/schemas/category.schema'
+import type { ExpenseCategory } from '@/schemas/category.schema'
 
 export interface CategoryBudget {
   category: ExpenseCategory

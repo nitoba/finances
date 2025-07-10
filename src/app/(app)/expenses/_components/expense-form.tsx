@@ -33,7 +33,9 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!(date && description && amount)) return
+    if (!(date && description && amount)) {
+      return
+    }
 
     await createExpenseMutation.mutateAsync(
       {

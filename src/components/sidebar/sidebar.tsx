@@ -1,7 +1,7 @@
 'use client'
 
-import * as React from 'react'
 import { LayoutDashboard, TableProperties } from 'lucide-react'
+import type * as React from 'react'
 
 import { NavMain } from '@/components/sidebar/nav-main'
 import {

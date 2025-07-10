@@ -13,7 +13,7 @@ export function ExpenseRankings() {
   const { user } = useUser()
   const { data: expenses } = useExpenses()
 
-  if (!user || !expenses) {
+  if (!(user && expenses)) {
     return null
   }
 
@@ -66,12 +66,12 @@ export function ExpenseRankings() {
       <CardContent>
         <div className="space-y-8">
           {sortedCategories.map((category) => (
-            <div key={category.category} className="flex items-center">
+            <div className="flex items-center" key={category.category}>
               <div className="flex-1 space-y-1">
-                <p className="text-sm font-medium leading-none">
+                <p className="font-medium text-sm leading-none">
                   {category.category}
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {category.percentageOfTotal.toFixed(2)}% of total expenses
                 </p>
               </div>

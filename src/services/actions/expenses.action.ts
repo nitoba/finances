@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use server'
 
+import dayjs from 'dayjs'
+import { and, eq, gt, lt } from 'drizzle-orm'
+import { z } from 'zod'
+import { createServerAction, ZSAError } from 'zsa'
 import { currentUser } from '@/lib/auth/current-session.server'
 import { db } from '@/lib/db/db'
 import { expenses } from '@/lib/db/schemas/expenses-schema'
 import { expenseSchema } from '@/schemas/expense.schema'
-import dayjs from 'dayjs'
-import { and, eq, gt, lt } from 'drizzle-orm'
-import { z } from 'zod'
-
-import { createServerAction, ZSAError } from 'zsa'
 
 export const getExpensesFromUserAction = createServerAction().handler(
   async () => {
@@ -110,9 +109,7 @@ export const getExpensesByMonthAction = createServerAction()
         )
 
       return expensesFromDb
-    } catch (error) {
-      // Lida com erros do banco ou outros
-      console.error('Error fetching expenses:', error)
+    } catch (_error) {
       throw new ZSAError('INTERNAL_SERVER_ERROR', 'Failed to fetch expenses')
     }
   })

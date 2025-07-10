@@ -7,7 +7,9 @@
     "dev": "pnpm db:start:dev & pnpm dev:next",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "lint": "pnpm exec biome lint --write ./src",
+    "lint:fix": "pnpm exec biome format --write ./src",
     "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
     "db:migrate:dev": "drizzle-kit migrate --config drizzle.dev.config.ts",
     "db:start:dev": "turso dev --db-file finances.db"

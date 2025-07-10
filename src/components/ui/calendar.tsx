@@ -5,7 +5,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from 'lucide-react'
-import type * as React from 'react'
+import * as React from 'react'
 import {
   type DayButton,
   DayPicker,

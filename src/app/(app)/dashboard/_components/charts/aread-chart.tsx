@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -35,7 +35,7 @@ export function BalanceAreaChart({ data }: AreaChartProps) {
         <CardDescription>Showing balance over time</CardDescription>
       </CardHeader>
       <CardContent className="p-2">
-        <ChartContainer config={chartConfig} className="h-[250px] w-full">
+        <ChartContainer className="h-[250px] w-full" config={chartConfig}>
           <AreaChart
             accessibilityLayer
             data={data}
@@ -46,15 +46,15 @@ export function BalanceAreaChart({ data }: AreaChartProps) {
           >
             <CartesianGrid vertical={false} />
             <XAxis
+              axisLine={false}
               dataKey="name"
               tickLine={false}
-              axisLine={false}
               tickMargin={8}
             />
             <YAxis />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <ChartTooltip content={<ChartTooltipContent />} cursor={false} />
             <defs>
-              <linearGradient id="fillBalance" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="fillBalance" x1="0" x2="0" y1="0" y2="1">
                 <stop
                   offset="5%"
                   stopColor="var(--color-balance)"
@@ -69,10 +69,10 @@ export function BalanceAreaChart({ data }: AreaChartProps) {
             </defs>
             <Area
               dataKey="balance"
-              type="natural"
               fill="url(#fillBalance)"
               fillOpacity={0.4}
               stroke="var(--color-balance)"
+              type="natural"
             />
           </AreaChart>
         </ChartContainer>

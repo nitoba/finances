@@ -1,16 +1,15 @@
 // 'use client'
 
-import { Pie, PieChart, Cell, ResponsiveContainer, Tooltip } from 'recharts'
-
-import { CategoryBudget } from '@/types/finance'
-import { ChartConfig } from '@/components/ui/chart'
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from '@/components/ui/card'
+import type { ChartConfig } from '@/components/ui/chart'
+import type { CategoryBudget } from '@/types/finance'
 
 const COLORS = {
   essentials: '#3b82f6',
@@ -63,20 +62,20 @@ export function BudgetPieChart({ budgets }: BudgetPieChartProps) {
       </CardHeader>
       <CardContent>
         <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer height="100%" width="100%">
             <PieChart>
               <Pie
-                data={sortedCategories}
                 cx="50%"
                 cy="50%"
+                data={sortedCategories}
+                dataKey="value"
                 innerRadius={60}
+                labelLine={false}
                 outerRadius={80}
                 paddingAngle={5}
-                dataKey="value"
-                labelLine={false}
               >
-                {sortedCategories.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                {sortedCategories.map((entry) => (
+                  <Cell fill={entry.color} key={`cell-${entry.name}`} />
                 ))}
               </Pie>
               <Tooltip
@@ -86,10 +85,10 @@ export function BudgetPieChart({ budgets }: BudgetPieChartProps) {
                     return (
                       <div className="rounded-lg bg-white p-2 shadow-md">
                         <p className="font-semibold">{data.category}</p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-gray-500 text-sm">
                           ${data.value.toFixed(2)}
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-gray-400 text-xs">
                           {data.planned} of total
                         </p>
                       </div>
@@ -103,7 +102,7 @@ export function BudgetPieChart({ budgets }: BudgetPieChartProps) {
         </div>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           {sortedCategories.map((category) => (
-            <div key={category.name} className="flex items-center">
+            <div className="flex items-center" key={category.name}>
               <div
                 className="mr-2 h-3 w-3 rounded-full"
                 style={{ backgroundColor: category.color }}

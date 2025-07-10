@@ -80,7 +80,7 @@ export function ExpenseEditForm({
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                variant={'outline'}
+                variant={'outline-solid'}
                 className="w-full justify-start text-left font-normal"
               >
                 <CalendarIcon />

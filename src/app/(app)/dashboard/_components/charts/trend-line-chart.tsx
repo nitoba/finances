@@ -1,14 +1,16 @@
 'use client'
+import { useState } from 'react'
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Legend,
 } from 'recharts'
-
+import colors from 'tailwindcss/colors'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -16,10 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ChartConfig, ChartContainer } from '@/components/ui/chart'
-import { green, blue, purple, yellow, red } from 'tailwindcss/colors'
-import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { type ChartConfig, ChartContainer } from '@/components/ui/chart'
 
 interface TrendLineChartProps {
   data: { name: string; [key: string]: number | string }[]
@@ -28,23 +27,23 @@ interface TrendLineChartProps {
 const chartConfig = {
   essentials: {
     label: 'Essentials',
-    color: blue['500'],
+    color: colors.blue['500'],
   },
   leisure: {
     label: 'Leisure',
-    color: purple['500'],
+    color: colors.purple['500'],
   },
   investments: {
     label: 'Investments',
-    color: green['500'],
+    color: colors.green['500'],
   },
   knowledge: {
     label: 'Knowledge',
-    color: yellow['500'],
+    color: colors.yellow['500'],
   },
   emergency: {
     label: 'Emergency',
-    color: red['500'],
+    color: colors.red['500'],
   },
 } satisfies ChartConfig
 
@@ -54,7 +53,7 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
   >('all')
 
   return (
-    <Card className="gap-2 flex flex-col sm:flex-row sm:block">
+    <Card className="flex flex-col gap-2 sm:block sm:flex-row">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Weekly Spending Trends</CardTitle>
@@ -63,16 +62,16 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
             Showing trends for different categories
           </CardDescription>
         </div>
-        <div className="flex gap-2 px-2 py-2 flex-wrap">
+        <div className="flex flex-wrap gap-2 px-2 py-2">
           <Button
-            variant="outline"
-            data-active={activeChart === 'all'}
             className="flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left data-[active=true]:bg-muted/80"
+            data-active={activeChart === 'all'}
             onClick={() => {
               setActiveChart('all')
             }}
+            variant="outline"
           >
-            <span className="text-xs text-muted-foreground">
+            <span className="text-muted-foreground text-xs">
               Show All Categories
             </span>
           </Button>
@@ -80,13 +79,13 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
             const chart = key as keyof typeof chartConfig
             return (
               <Button
-                key={chart}
-                variant="outline"
-                data-active={activeChart === chart}
                 className="flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/80"
+                data-active={activeChart === chart}
+                key={chart}
                 onClick={() => setActiveChart(chart)}
+                variant="outline"
               >
-                <span className="text-xs text-muted-foreground">
+                <span className="text-muted-foreground text-xs">
                   {chartConfig[chart].label}
                 </span>
               </Button>
@@ -96,8 +95,8 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
         <ChartContainer
-          config={chartConfig}
           className="aspect-auto h-[250px] w-full"
+          config={chartConfig}
         >
           <LineChart
             accessibilityLayer
@@ -109,11 +108,11 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="name"
-              tickLine={false}
               axisLine={false}
-              tickMargin={8}
+              dataKey="name"
               minTickGap={32}
+              tickLine={false}
+              tickMargin={8}
             />
             <YAxis />
             <Tooltip />
@@ -121,21 +120,21 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
             {activeChart === 'all' ? (
               Object.keys(chartConfig).map((key) => (
                 <Line
-                  key={key}
                   dataKey={key}
-                  type="monotone"
+                  dot={false}
+                  key={key}
                   stroke={chartConfig[key as keyof typeof chartConfig].color}
                   strokeWidth={2}
-                  dot={false}
+                  type="monotone"
                 />
               ))
             ) : (
               <Line
                 dataKey={activeChart}
-                type="monotone"
+                dot={false}
                 stroke={chartConfig[activeChart].color}
                 strokeWidth={2}
-                dot={false}
+                type="monotone"
               />
             )}
           </LineChart>

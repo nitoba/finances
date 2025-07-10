@@ -3,6 +3,13 @@
   "extends": [
     "ultracite"
   ],
+  "linter": {
+    "rules": {
+      "performance": {
+        "noNamespaceImport":"off"
+      }
+    }
+  },
   "javascript": {
     "formatter": {
       "semicolons": "asNeeded"

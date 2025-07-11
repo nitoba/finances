@@ -13,7 +13,7 @@ export function ExpenseRankings() {
   const { user } = useUser()
   const { data: expenses } = useExpenses()
 
-  if (!user || !expenses) {
+  if (!(user && expenses)) {
     return null
   }
 
@@ -26,11 +26,11 @@ export function ExpenseRankings() {
   ]
   const categoryData = categories.map((category) => {
     const categoryExpenses = expenses.filter(
-      (expense) => expense.category === category,
+      (expense) => expense.category === category
     )
     const amount = categoryExpenses.reduce(
       (sum, expense) => sum + expense.amount,
-      0,
+      0
     )
     const previousAmount = 0 // Aqui você pode adicionar lógica para obter o valor anterior, se disponível
     const trend =
@@ -66,12 +66,12 @@ export function ExpenseRankings() {
       <CardContent>
         <div className="space-y-8">
           {sortedCategories.map((category) => (
-            <div key={category.category} className="flex items-center">
+            <div className="flex items-center" key={category.category}>
               <div className="flex-1 space-y-1">
-                <p className="text-sm font-medium leading-none">
+                <p className="font-medium text-sm leading-none">
                   {category.category}
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {category.percentageOfTotal.toFixed(2)}% of total expenses
                 </p>
               </div>

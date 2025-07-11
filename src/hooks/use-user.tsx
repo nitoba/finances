@@ -1,6 +1,6 @@
-import { authClient } from '@/lib/auth-client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { User } from 'better-auth'
+import type { User } from 'better-auth'
+import { authClient } from '@/lib/auth-client'
 
 export type CurrentUser = User & {
   monthlySalary: number | null

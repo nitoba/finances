@@ -1,7 +1,7 @@
 'use client'
 
 import {
-  ColumnDef,
+  type ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
@@ -43,12 +43,12 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="text-center">
+                    <TableHead className="text-center" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   )
@@ -60,17 +60,17 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
+                      className="text-nowrap text-center"
                       key={cell.id}
-                      className="text-center text-nowrap"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -79,8 +79,8 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
                   className="h-24 text-center"
+                  colSpan={columns.length}
                 >
                   No results.
                 </TableCell>

@@ -9,17 +9,17 @@ export default function AuthPage() {
   const [isSignIn, setIsSignIn] = useState(true)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-5">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-5">
       <Card className="w-full max-w-md">
         <CardContent>
           {isSignIn ? (
             <SignInForm onHandleSignUp={() => setIsSignIn(false)} />
           ) : (
             <SignUpForm
-              onSignUpWithEmailSuccess={() => {
+              onHandleSignIn={(): void => {
                 setIsSignIn(true)
               }}
-              onHandleSignIn={function (): void {
+              onSignUpWithEmailSuccess={() => {
                 setIsSignIn(true)
               }}
             />

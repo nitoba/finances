@@ -1,17 +1,14 @@
-import React, { useState } from 'react'
 import { CalendarIcon, PlusCircle } from 'lucide-react'
-import { cn } from '@/lib/utils'
-
-import { useCreateExpense } from '@/hooks/use-expenses'
-import { ExpenseCategory } from '@/schemas/category.schema'
+import type React from 'react'
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { Input } from '@/components/ui/input'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
 import {
   Select,
   SelectContent,
@@ -19,6 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useCreateExpense } from '@/hooks/use-expenses'
+import { cn } from '@/lib/utils'
+import type { ExpenseCategory } from '@/schemas/category.schema'
 
 interface ExpenseFormProps {
   onAddExpense: () => void
@@ -33,20 +33,22 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!date || !description || !amount) return
+    if (!(date && description && amount)) {
+      return
+    }
 
     await createExpenseMutation.mutateAsync(
       {
         date: date.toISOString(),
         description,
-        amount: parseFloat(amount),
+        amount: Number.parseFloat(amount),
         category,
       },
       {
         onSuccess: () => {
           onAddExpense()
         },
-      },
+      }
     )
 
     setDescription('')
@@ -54,21 +56,21 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Add New Expense</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <form className="w-full" onSubmit={handleSubmit}>
+      <h2 className="mb-4 font-bold text-2xl text-gray-800">Add New Expense</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="mb-1 block font-medium text-gray-700 text-sm">
             Date
           </label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                variant={'outline'}
                 className={cn(
                   'w-full justify-start text-left font-normal',
-                  !date && 'text-muted-foreground',
+                  !date && 'text-muted-foreground'
                 )}
+                variant="outline"
               >
                 <CalendarIcon />
                 {date ? (
@@ -78,45 +80,45 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent align="start" className="w-auto p-0">
               <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
                 initialFocus
+                mode="single"
+                onSelect={setDate}
+                selected={date}
               />
             </PopoverContent>
           </Popover>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="mb-1 block font-medium text-gray-700 text-sm">
             Description
           </label>
           <Input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
             className="w-full"
+            onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter description"
             required
+            type="text"
+            value={description}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="mb-1 block font-medium text-gray-700 text-sm">
             Amount
           </label>
           <Input
+            className="w-full"
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter amount"
+            required
+            step="0.01"
             type="number"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full"
-            placeholder="Enter amount"
-            step="0.01"
-            required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="mb-1 block font-medium text-gray-700 text-sm">
             Category
           </label>
           <Select
@@ -136,10 +138,10 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
         </div>
       </div>
       <Button
+        className="mt-4 flex w-full items-center justify-center rounded-md bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700"
         type="submit"
-        className="mt-4 flex items-center justify-center w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors"
       >
-        <PlusCircle className="w-5 h-5 mr-2" />
+        <PlusCircle className="mr-2 h-5 w-5" />
         Add Expense
       </Button>
     </form>

@@ -1,9 +1,9 @@
 'use client'
 
+import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
-import { DataTable } from './data-table'
-import { columns } from './columns'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -12,16 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { ExpenseEditForm } from '../expense-edit-form'
-
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
-import {
-  useExpenses,
-  useUpdateExpense,
-  useDeleteExpense,
-} from '@/hooks/use-expenses'
-import { Expense } from '@/schemas/expense.schema'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +19,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  useDeleteExpense,
+  useExpenses,
+  useUpdateExpense,
+} from '@/hooks/use-expenses'
+import type { Expense } from '@/schemas/expense.schema'
+import { ExpenseEditForm } from '../expense-edit-form'
+import { columns } from './columns'
+import { DataTable } from './data-table'
 import { TableLoading } from './table-loading'
 
 export function ExpenseTable() {
@@ -72,7 +71,7 @@ export function ExpenseTable() {
               description: 'The expense has been successfully deleted.',
             })
           },
-        },
+        }
       )
     }
   }
@@ -87,7 +86,7 @@ export function ExpenseTable() {
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
+                <Button className="h-8 w-8 p-0" variant="ghost">
                   <span className="sr-only">Open menu</span>
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
@@ -109,21 +108,25 @@ export function ExpenseTable() {
         },
       },
     ],
-    [],
+    [handleDelete, handleEdit]
   )
 
-  if (isLoading) return <TableLoading />
-  if (error) return <div>Error loading expenses</div>
+  if (isLoading) {
+    return <TableLoading />
+  }
+  if (error) {
+    return <div>Error loading expenses</div>
+  }
 
   return (
-    <div className="w-full bg-white rounded-lg shadow-md overflow-hidden">
-      <h2 className="text-2xl font-bold p-6 bg-gray-50 text-gray-800">
+    <div className="w-full overflow-hidden rounded-lg bg-white shadow-md">
+      <h2 className="bg-gray-50 p-6 font-bold text-2xl text-gray-800">
         Expense Records
       </h2>
       <DataTable columns={columnsWithActions} data={expenses} />
 
       {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+      <Dialog onOpenChange={setIsEditDialogOpen} open={isEditDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit Expense</DialogTitle>
@@ -135,15 +138,15 @@ export function ExpenseTable() {
           {selectedExpense && (
             <ExpenseEditForm
               expense={selectedExpense}
-              onSave={handleUpdateExpense}
               onCancel={() => setIsEditDialogOpen(false)}
+              onSave={handleUpdateExpense}
             />
           )}
         </DialogContent>
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+      <Dialog onOpenChange={setIsDeleteDialogOpen} open={isDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Confirm Deletion</DialogTitle>
@@ -154,12 +157,12 @@ export function ExpenseTable() {
           </DialogHeader>
           <DialogFooter>
             <Button
-              variant="outline"
               onClick={() => setIsDeleteDialogOpen(false)}
+              variant="outline"
             >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleConfirmDelete}>
+            <Button onClick={handleConfirmDelete} variant="destructive">
               Delete
             </Button>
           </DialogFooter>

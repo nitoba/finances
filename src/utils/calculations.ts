@@ -45,10 +45,11 @@ export const calculateCategoryBudgets = (
 }
 
 export const calculateWeeklyTrends = (expenses: Expense[]) => {
-  const weeklyTrends: { [key: string]: { [key in ExpenseCategory]: number } } =
-    {}
+  const weeklyTrends: {
+    [chave: string]: { [key in ExpenseCategory]: number }
+  } = {}
 
-  expenses.forEach((expense) => {
+  for (const expense of expenses) {
     const date = new Date(expense.date)
     const month = date.toLocaleString('default', { month: 'short' })
     const weekNumber = Math.ceil(date.getDate() / 7)
@@ -64,7 +65,7 @@ export const calculateWeeklyTrends = (expenses: Expense[]) => {
       }
     }
     weeklyTrends[weekKey][expense.category] += expense.amount
-  })
+  }
 
   return Object.entries(weeklyTrends).map(([week, data]) => ({
     name: week,
@@ -363,4 +364,330 @@ const calculateLinearTrend = (values: number[]): number => {
   const slope = (n * xySum - xSum * ySum) / (n * xSquaredSum - xSum * xSum)
 
   return slope || 0
+}
+
+// Enhanced Spending Trend Analysis Functions
+export interface SpendingTrendAnalysis {
+  categoryTrends: Record<
+    ExpenseCategory,
+    {
+      trend: 'increasing' | 'decreasing' | 'stable'
+      changePercentage: number
+      averageSpending: number
+      volatility: 'high' | 'medium' | 'low'
+      prediction: number
+    }
+  >
+  overallTrend: {
+    direction: 'increasing' | 'decreasing' | 'stable'
+    strength: number
+    confidence: number
+  }
+  insights: string[]
+  recommendations: string[]
+}
+
+const analyzeCategoryTrend = (trend: number) => {
+  if (trend > 0.1) {
+    return 'increasing'
+  }
+  if (trend < -0.1) {
+    return 'decreasing'
+  }
+  return 'stable'
+}
+
+const analyzeVolatility = (changePercentage: number) => {
+  if (changePercentage > 30) {
+    return 'high'
+  }
+  if (changePercentage > 15) {
+    return 'medium'
+  }
+  return 'low'
+}
+
+const analyzeOverallDirection = (spendingTrend: number) => {
+  if (spendingTrend > 0.1) {
+    return 'increasing'
+  }
+  if (spendingTrend < -0.1) {
+    return 'decreasing'
+  }
+  return 'stable'
+}
+
+export const calculateSpendingTrendAnalysis = (
+  expenses: Expense[],
+  months = 3
+): SpendingTrendAnalysis => {
+  const patterns = calculateHistoricalSpendingPatterns(expenses, months)
+  const categoryTrends: Record<
+    ExpenseCategory,
+    {
+      trend: 'increasing' | 'decreasing' | 'stable'
+      changePercentage: number
+      averageSpending: number
+      volatility: 'high' | 'medium' | 'low'
+      prediction: number
+    }
+  > = {} as Record<
+    ExpenseCategory,
+    {
+      trend: 'increasing' | 'decreasing' | 'stable'
+      changePercentage: number
+      averageSpending: number
+      volatility: 'high' | 'medium' | 'low'
+      prediction: number
+    }
+  >
+  const insights: string[] = []
+  const recommendations: string[] = []
+
+  // Analyze each category
+  for (const [category, pattern] of Object.entries(patterns.categoryPatterns)) {
+    const trend = analyzeCategoryTrend(pattern.trend)
+    const changePercentage = Math.abs(pattern.trend) * 100
+    const volatility = analyzeVolatility(changePercentage)
+
+    // Simple prediction: current average + trend
+    const prediction = pattern.average + pattern.trend * 4 // 4 weeks ahead
+
+    categoryTrends[category as ExpenseCategory] = {
+      trend,
+      changePercentage: Math.round(changePercentage * 100) / 100,
+      averageSpending: Math.round(pattern.average * 100) / 100,
+      volatility,
+      prediction: Math.round(prediction * 100) / 100,
+    }
+
+    // Generate insights
+    if (trend === 'increasing' && changePercentage > 20) {
+      insights.push(
+        `${category} spending is increasing rapidly (+${changePercentage.toFixed(1)}%)`
+      )
+      recommendations.push(
+        `Consider reviewing your ${category} budget and identifying areas to reduce spending`
+      )
+    }
+
+    if (volatility === 'high') {
+      insights.push(`${category} spending shows high volatility`)
+      recommendations.push(
+        `Try to establish more consistent spending patterns for ${category}`
+      )
+    }
+  }
+
+  // Overall trend analysis
+  const overallDirection = analyzeOverallDirection(patterns.spendingTrend)
+  const strength = Math.abs(patterns.spendingTrend)
+  const confidence = Math.max(
+    0,
+    100 - (patterns.spendingVariance / patterns.averageWeeklySpending) * 100
+  )
+
+  // Add overall insights
+  if (overallDirection === 'increasing') {
+    insights.push('Overall spending trend is increasing')
+    recommendations.push(
+      'Review your budget and identify areas for cost reduction'
+    )
+  } else if (overallDirection === 'decreasing') {
+    insights.push('Overall spending trend is decreasing - great progress!')
+  }
+
+  if (confidence < 70) {
+    insights.push('Spending patterns show high variability')
+    recommendations.push('Focus on creating more consistent spending habits')
+  }
+
+  return {
+    categoryTrends,
+    overallTrend: {
+      direction: overallDirection,
+      strength: Math.round(strength * 100) / 100,
+      confidence: Math.round(confidence * 100) / 100,
+    },
+    insights,
+    recommendations,
+  }
+}
+
+export interface MonthlyComparison {
+  currentMonth: {
+    total: number
+    byCategory: Record<ExpenseCategory, number>
+  }
+  previousMonth: {
+    total: number
+    byCategory: Record<ExpenseCategory, number>
+  }
+  changes: {
+    totalChange: number
+    totalChangePercentage: number
+    categoryChanges: Record<
+      ExpenseCategory,
+      {
+        change: number
+        changePercentage: number
+      }
+    >
+  }
+}
+
+export const calculateMonthlyComparison = (
+  expenses: Expense[]
+): MonthlyComparison => {
+  const now = new Date()
+  const currentMonth = now.getMonth()
+  const currentYear = now.getFullYear()
+  const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1
+  const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear
+
+  const currentMonthExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date)
+    return (
+      expenseDate.getMonth() === currentMonth &&
+      expenseDate.getFullYear() === currentYear
+    )
+  })
+
+  const previousMonthExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date)
+    return (
+      expenseDate.getMonth() === previousMonth &&
+      expenseDate.getFullYear() === previousYear
+    )
+  })
+
+  const categories: ExpenseCategory[] = [
+    'essentials',
+    'leisure',
+    'investments',
+    'knowledge',
+    'emergency',
+  ]
+
+  const currentByCategory = {} as Record<ExpenseCategory, number>
+  const previousByCategory = {} as Record<ExpenseCategory, number>
+
+  for (const category of categories) {
+    currentByCategory[category] = currentMonthExpenses
+      .filter((expense) => expense.category === category)
+      .reduce((sum, expense) => sum + expense.amount, 0)
+
+    previousByCategory[category] = previousMonthExpenses
+      .filter((expense) => expense.category === category)
+      .reduce((sum, expense) => sum + expense.amount, 0)
+  }
+
+  const currentTotal = Object.values(currentByCategory).reduce(
+    (sum, amount) => sum + amount,
+    0
+  )
+  const previousTotal = Object.values(previousByCategory).reduce(
+    (sum, amount) => sum + amount,
+    0
+  )
+
+  const totalChange = currentTotal - previousTotal
+  const totalChangePercentage =
+    previousTotal > 0 ? (totalChange / previousTotal) * 100 : 0
+
+  const categoryChanges = {} as Record<
+    ExpenseCategory,
+    { change: number; changePercentage: number }
+  >
+
+  for (const category of categories) {
+    const change = currentByCategory[category] - previousByCategory[category]
+    const changePercentage =
+      previousByCategory[category] > 0
+        ? (change / previousByCategory[category]) * 100
+        : 0
+
+    categoryChanges[category] = {
+      change: Math.round(change * 100) / 100,
+      changePercentage: Math.round(changePercentage * 100) / 100,
+    }
+  }
+
+  return {
+    currentMonth: {
+      total: Math.round(currentTotal * 100) / 100,
+      byCategory: currentByCategory,
+    },
+    previousMonth: {
+      total: Math.round(previousTotal * 100) / 100,
+      byCategory: previousByCategory,
+    },
+    changes: {
+      totalChange: Math.round(totalChange * 100) / 100,
+      totalChangePercentage: Math.round(totalChangePercentage * 100) / 100,
+      categoryChanges,
+    },
+  }
+}
+
+export const calculateMovingAverages = (
+  expenses: Expense[],
+  periods = [7, 14, 30]
+): Record<number, { name: string; [key: string]: number | string }[]> => {
+  const result: Record<
+    number,
+    { name: string; [key: string]: number | string }[]
+  > = {}
+
+  for (const period of periods) {
+    const movingAverages: { name: string; [key: string]: number | string }[] =
+      []
+    const now = new Date()
+
+    for (let i = 0; i < 12; i++) {
+      // Last 12 periods
+      const endDate = new Date(now)
+      endDate.setDate(endDate.getDate() - i * period)
+      const startDate = new Date(endDate)
+      startDate.setDate(startDate.getDate() - period + 1)
+
+      const periodExpenses = expenses.filter((expense) => {
+        const expenseDate = new Date(expense.date)
+        return expenseDate >= startDate && expenseDate <= endDate
+      })
+
+      const categories: ExpenseCategory[] = [
+        'essentials',
+        'leisure',
+        'investments',
+        'knowledge',
+        'emergency',
+      ]
+      const categoryTotals: Record<string, number> = {}
+
+      for (const category of categories) {
+        categoryTotals[category] = periodExpenses
+          .filter((expense) => expense.category === category)
+          .reduce((sum, expense) => sum + expense.amount, 0)
+      }
+
+      let periodName: string
+      if (period === 7) {
+        periodName = `${12 - i}W`
+      } else if (period === 14) {
+        periodName = `${12 - i}B`
+      } else {
+        periodName = `${12 - i}M`
+      }
+
+      movingAverages.unshift({
+        name: periodName,
+        ...categoryTotals,
+      })
+    }
+
+    result[period] = movingAverages
+  }
+
+  return result
 }

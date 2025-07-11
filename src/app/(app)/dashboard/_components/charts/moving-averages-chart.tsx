@@ -44,12 +44,14 @@ const chartConfig = {
 const periodLabels = {
   7: 'Semanal',
   14: 'Quinzenal',
-  30: 'Mensal'
+  30: 'Mensal',
 } as const
 
 export function MovingAveragesChart({ expenses }: MovingAveragesChartProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<7 | 14 | 30>(7)
-  const [activeChart, setActiveChart] = useState<keyof typeof chartConfig | 'all'>('all')
+  const [activeChart, setActiveChart] = useState<
+    keyof typeof chartConfig | 'all'
+  >('all')
 
   const movingAverages = calculateMovingAverages(expenses, [7, 14, 30])
   const data = movingAverages[selectedPeriod] || []
@@ -93,12 +95,16 @@ export function MovingAveragesChart({ expenses }: MovingAveragesChartProps) {
       <div className="space-y-4">
         {/* Period Selection */}
         <div className="flex flex-wrap gap-2">
-          <div className="mr-2 self-center text-muted-foreground text-sm">Período:</div>
+          <div className="mr-2 self-center text-muted-foreground text-sm">
+            Período:
+          </div>
           {Object.entries(periodLabels).map(([period, label]) => (
             <Button
               key={period}
               size="sm"
-              variant={selectedPeriod === Number(period) ? 'default' : 'outline'}
+              variant={
+                selectedPeriod === Number(period) ? 'default' : 'outline'
+              }
               onClick={() => setSelectedPeriod(Number(period) as 7 | 14 | 30)}
               className="h-8 px-3 font-medium text-xs"
             >

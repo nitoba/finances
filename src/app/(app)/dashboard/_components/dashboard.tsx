@@ -2,12 +2,11 @@
 
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { toast } from 'sonner'
 import { useServerActionQuery } from '@/hooks/server-action-hooks'
 import { useExpenses } from '@/hooks/use-expenses'
-import { cn } from '@/lib/utils'
 import { getSalaryAction } from '@/services/actions/user.action'
 import type { SalaryDistribution } from '@/types/finance'
 import {
@@ -18,6 +17,7 @@ import {
   calculateWeeklyTrends,
 } from '@/utils/calculations'
 import { AddExpenseDialog } from '../../../../components/add-expense-dialog'
+import { QuickActions } from '../../../../components/quick-actions'
 import { DashboardBlocks } from './dashboard-blocks'
 import { LoadingDashboard } from './loading-dashboard'
 import { MonthSelector } from './month-selector'
@@ -59,14 +59,17 @@ export function Dashboard() {
     resetMonthlyExpenses()
   }, [expenses])
 
-  const handleCalculate = (salaryValue: number) => {
-    try {
-      setDistribution(calculateDistribution(salaryValue))
-      queryClient.setQueryData(['salary'], salaryValue)
-    } catch (_error) {
-      toast.error('Failed to save salary')
-    }
-  }
+  const handleCalculate = useCallback(
+    (salaryValue: number) => {
+      try {
+        setDistribution(calculateDistribution(salaryValue))
+        queryClient.setQueryData(['salary'], salaryValue)
+      } catch (_error) {
+        toast.error('Failed to save salary')
+      }
+    },
+    [queryClient]
+  )
 
   useEffect(() => {
     if (salary) {
@@ -94,37 +97,56 @@ export function Dashboard() {
       : []
 
   return (
-    <div className="min-h-screen py-8 sm:px-4">
-      <div
-        className={cn('flex flex-col justify-between sm:flex-row', {
-          'justify-center': !distribution,
-        })}
-      >
-        <h1 className="mb-8 font-bold text-3xl text-gray-900">
-          Personal Finance Manager (70/30 Rule)
-        </h1>
-
-        {distribution && <AddExpenseDialog className="w-full sm:w-auto" />}
-      </div>
-
-      <div className="mt-8 space-y-8">
-        {isGettingExpenses || isGettingSalary || !distribution ? (
-          <LoadingDashboard />
-        ) : (
-          <>
+    <div className="space-y-8">
+      {/* Header Section */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <h1 className="font-semibold text-3xl tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Track your finances with the 70/30 budgeting rule
+          </p>
+        </div>
+        {distribution && (
+          <div className="flex items-center gap-3">
             <MonthSelector
               onMonthChange={setSelectedMonth}
               selectedMonth={selectedMonth}
             />
-            <DashboardBlocks
-              balanceData={balanceData}
-              budgets={calculateCategoryBudgets(distribution, filteredExpenses)}
-              comparisonData={comparisonData}
-              trendData={trendData}
-            />
-          </>
+            <AddExpenseDialog />
+          </div>
         )}
       </div>
+
+      {/* Main Content */}
+      {isGettingExpenses || isGettingSalary || !distribution ? (
+        <LoadingDashboard />
+      ) : (
+        <DashboardBlocks
+          balanceData={balanceData}
+          budgets={calculateCategoryBudgets(distribution, filteredExpenses)}
+          comparisonData={comparisonData}
+          onAdjustBudget={(_category, _amount) => {
+            // TODO: Implement actual budget adjustment logic
+          }}
+          trendData={trendData}
+        />
+      )}
+
+      {/* Quick Actions */}
+      {distribution && (
+        <QuickActions
+          onAddExpense={() => {
+            // Handle expense addition - could invalidate queries
+            queryClient.invalidateQueries({ queryKey: ['expenses'] })
+          }}
+          onBudgetSettings={() => {
+            // Navigate to budget settings or open modal
+          }}
+          onGenerateReport={() => {
+            // Generate and download report
+          }}
+        />
+      )}
     </div>
   )
 }

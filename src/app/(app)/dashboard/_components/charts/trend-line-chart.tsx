@@ -1,24 +1,15 @@
 'use client'
 import { useState } from 'react'
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
-import colors from 'tailwindcss/colors'
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
 import { Button } from '@/components/ui/button'
+import { EnhancedChartContainer } from '@/components/enhanced-chart-container'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { type ChartConfig, ChartContainer } from '@/components/ui/chart'
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
+import { cn } from '@/lib/utils'
 
 interface TrendLineChartProps {
   data: { name: string; [key: string]: number | string }[]
@@ -27,23 +18,23 @@ interface TrendLineChartProps {
 const chartConfig = {
   essentials: {
     label: 'Essentials',
-    color: colors.blue['500'],
+    color: 'hsl(217, 91%, 60%)',
   },
   leisure: {
     label: 'Leisure',
-    color: colors.purple['500'],
+    color: 'hsl(142, 71%, 45%)',
   },
   investments: {
     label: 'Investments',
-    color: colors.green['500'],
+    color: 'hsl(262, 83%, 58%)',
   },
   knowledge: {
     label: 'Knowledge',
-    color: colors.yellow['500'],
+    color: 'hsl(25, 95%, 53%)',
   },
   emergency: {
     label: 'Emergency',
-    color: colors.red['500'],
+    color: 'hsl(346, 87%, 43%)',
   },
 } satisfies ChartConfig
 
@@ -52,94 +43,143 @@ export function TrendLineChart({ data }: TrendLineChartProps) {
     keyof typeof chartConfig | 'all'
   >('all')
 
-  return (
-    <Card className="flex flex-col gap-2 sm:block sm:flex-row">
-      <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
-        <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Weekly Spending Trends</CardTitle>
+  const isEmpty = !data || data.length === 0
 
-          <CardDescription>
-            Showing trends for different categories
-          </CardDescription>
-        </div>
-        <div className="flex flex-wrap gap-2 px-2 py-2">
+  const handleExport = () => {
+    // Export chart data as CSV
+    const csvData = data.map((item) => ({
+      Week: item.name,
+      ...Object.fromEntries(
+        Object.keys(chartConfig).map((key) => [
+          chartConfig[key as keyof typeof chartConfig].label,
+          item[key] || 0,
+        ])
+      ),
+    }))
+
+    const csvContent = [
+      Object.keys(csvData[0]).join(','),
+      ...csvData.map((row) => Object.values(row).join(',')),
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `spending-trends-${new Date().toISOString().split('T')[0]}.csv`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  return (
+    <EnhancedChartContainer
+      title="Spending Trends"
+      description="Weekly spending patterns across categories"
+      isEmpty={isEmpty}
+      emptyMessage="No spending data available for trend analysis"
+      onExport={handleExport}
+      chartConfig={chartConfig}
+    >
+      <div className="space-y-4">
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap gap-2">
           <Button
-            className="flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left data-[active=true]:bg-muted/80"
-            data-active={activeChart === 'all'}
-            onClick={() => {
-              setActiveChart('all')
-            }}
-            variant="outline"
+            size="sm"
+            variant={activeChart === 'all' ? 'default' : 'outline'}
+            onClick={() => setActiveChart('all')}
+            className={cn(
+              'h-8 px-3 font-medium text-xs transition-all',
+              activeChart === 'all'
+                ? 'bg-primary text-primary-foreground shadow-sm'
+                : 'border-gray-200 bg-transparent text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+            )}
           >
-            <span className="text-muted-foreground text-xs">
-              Show All Categories
-            </span>
+            All Categories
           </Button>
-          {Object.keys(chartConfig).map((key) => {
-            const chart = key as keyof typeof chartConfig
-            return (
-              <Button
-                className="flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/80"
-                data-active={activeChart === chart}
-                key={chart}
-                onClick={() => setActiveChart(chart)}
-                variant="outline"
-              >
-                <span className="text-muted-foreground text-xs">
-                  {chartConfig[chart].label}
-                </span>
-              </Button>
-            )
-          })}
+          {Object.entries(chartConfig).map(([key, config]) => (
+            <Button
+              key={key}
+              size="sm"
+              variant={activeChart === key ? 'default' : 'outline'}
+              onClick={() => setActiveChart(key as keyof typeof chartConfig)}
+              className={cn(
+                'h-8 px-3 font-medium text-xs transition-all',
+                activeChart === key
+                  ? 'text-primary-foreground shadow-sm'
+                  : 'border-gray-200 bg-transparent text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+              )}
+              style={
+                activeChart === key ? { backgroundColor: config.color } : {}
+              }
+            >
+              {config.label}
+            </Button>
+          ))}
         </div>
-      </CardHeader>
-      <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          className="aspect-auto h-[250px] w-full"
-          config={chartConfig}
-        >
+
+        {/* Chart */}
+        <ChartContainer className="h-[300px] w-full" config={chartConfig}>
           <LineChart
             accessibilityLayer
             data={data}
             margin={{
-              left: 12,
-              right: 12,
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5,
             }}
+            role="img"
+            aria-label={`Spending trends line chart showing ${activeChart === 'all' ? 'all categories' : chartConfig[activeChart as keyof typeof chartConfig]?.label || activeChart} over time`}
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              axisLine={false}
-              dataKey="name"
-              minTickGap={32}
-              tickLine={false}
-              tickMargin={8}
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke="hsl(var(--muted-foreground))"
+              strokeOpacity={0.1}
             />
-            <YAxis />
-            <Tooltip />
-            <Legend />
+            <XAxis
+              dataKey="name"
+              tickLine={false}
+              axisLine={false}
+              className="text-xs"
+              tick={{ fontSize: 12 }}
+              aria-label="Time periods"
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              className="text-xs"
+              tick={{ fontSize: 12 }}
+              aria-label="Spending amount in dollars"
+            />
+            <ChartTooltip content={<ChartTooltipContent />} />
             {activeChart === 'all' ? (
-              Object.keys(chartConfig).map((key) => (
+              Object.entries(chartConfig).map(([key, config]) => (
                 <Line
-                  dataKey={key}
-                  dot={false}
                   key={key}
-                  stroke={chartConfig[key as keyof typeof chartConfig].color}
-                  strokeWidth={2}
+                  dataKey={key}
                   type="monotone"
+                  stroke={config.color}
+                  strokeWidth={3}
+                  dot={{ r: 4, strokeWidth: 2, fill: 'var(--background)' }}
+                  activeDot={{ r: 6, strokeWidth: 0 }}
+                  aria-label={`${config.label} spending trend`}
                 />
               ))
             ) : (
               <Line
                 dataKey={activeChart}
-                dot={false}
-                stroke={chartConfig[activeChart].color}
-                strokeWidth={2}
                 type="monotone"
+                stroke={chartConfig[activeChart].color}
+                strokeWidth={3}
+                dot={{ r: 5, strokeWidth: 2, fill: 'var(--background)' }}
+                activeDot={{ r: 7, strokeWidth: 0 }}
+                aria-label={`${chartConfig[activeChart].label} spending trend`}
               />
             )}
           </LineChart>
         </ChartContainer>
-      </CardContent>
-    </Card>
+      </div>
+    </EnhancedChartContainer>
   )
 }

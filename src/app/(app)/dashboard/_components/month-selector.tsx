@@ -27,29 +27,21 @@ export function MonthSelector({
   })
 
   return (
-    <div className="mb-4">
-      <label
-        className="block font-medium text-gray-700 text-sm"
-        htmlFor="month"
-      >
-        Select Month
-      </label>
-      <Select
-        name="month"
-        onValueChange={handleMonthChange}
-        value={selectedMonth}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Month" />
-        </SelectTrigger>
-        <SelectContent>
-          {months.map((month) => (
-            <SelectItem key={month} value={month}>
-              {dayjs(month).format('MMMM YYYY')}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Select
+      name="month"
+      onValueChange={handleMonthChange}
+      value={selectedMonth}
+    >
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Select month" />
+      </SelectTrigger>
+      <SelectContent>
+        {months.map((month) => (
+          <SelectItem key={month} value={month}>
+            {dayjs(month).format('MMMM YYYY')}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

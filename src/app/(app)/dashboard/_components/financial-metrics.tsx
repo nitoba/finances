@@ -1,8 +1,14 @@
 'use client'
 
-import { BarChart, Calculator, TrendingUp } from 'lucide-react'
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  DollarSign,
+  PiggyBank,
+  Target,
+  TrendingUp,
+} from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
 import { useExpenses } from '@/hooks/use-expenses'
 import { useUser } from '@/hooks/use-user'
 import {
@@ -11,6 +17,65 @@ import {
   calculateSavingsRate,
   calculateTotalIncome,
 } from '@/utils/calculations'
+
+interface MetricCardProps {
+  title: string
+  value: string
+  change?: {
+    value: number
+    type: 'positive' | 'negative'
+  }
+  icon: React.ReactNode
+  description: string
+  gradient?: string
+}
+
+function MetricCard({
+  title,
+  value,
+  change,
+  icon,
+  description,
+  gradient,
+}: MetricCardProps) {
+  return (
+    <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-white to-gray-50/50 shadow-gray-200/40 shadow-lg dark:from-gray-900 dark:to-gray-800/50 dark:shadow-gray-900/40">
+      {gradient && <div className={`absolute inset-0 opacity-5 ${gradient}`} />}
+      <CardContent className="relative p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              {icon}
+            </div>
+            <div>
+              <p className="font-medium text-muted-foreground text-sm">
+                {title}
+              </p>
+              <p className="font-semibold text-2xl tracking-tight">{value}</p>
+            </div>
+          </div>
+          {change && (
+            <div
+              className={`flex items-center gap-1 rounded-full px-2.5 py-1 font-medium text-xs ${
+                change.type === 'positive'
+                  ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400'
+                  : 'bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400'
+              }`}
+            >
+              {change.type === 'positive' ? (
+                <ArrowUpIcon className="h-3 w-3" />
+              ) : (
+                <ArrowDownIcon className="h-3 w-3" />
+              )}
+              {Math.abs(change.value)}%
+            </div>
+          )}
+        </div>
+        <p className="mt-3 text-muted-foreground text-sm">{description}</p>
+      </CardContent>
+    </Card>
+  )
+}
 
 export function FinancialMetrics() {
   const { user } = useUser()
@@ -33,57 +98,44 @@ export function FinancialMetrics() {
     totalIncome
   )
 
+  const metrics = [
+    {
+      title: 'Monthly Income',
+      value: `$${totalIncome.toLocaleString()}`,
+      icon: <DollarSign className="h-5 w-5" />,
+      description: 'Total monthly income',
+      gradient: 'bg-gradient-to-r from-blue-500 to-cyan-500',
+    },
+    {
+      title: 'Savings Rate',
+      value: `${savingsRate.toFixed(1)}%`,
+      change: { value: 5.2, type: 'positive' as const },
+      icon: <PiggyBank className="h-5 w-5" />,
+      description: 'Percentage of income saved',
+      gradient: 'bg-gradient-to-r from-green-500 to-emerald-500',
+    },
+    {
+      title: 'Budget Used',
+      value: `${budgetUtilization.toFixed(1)}%`,
+      change: { value: 2.1, type: 'negative' as const },
+      icon: <Target className="h-5 w-5" />,
+      description: 'Of total monthly budget',
+      gradient: 'bg-gradient-to-r from-orange-500 to-red-500',
+    },
+    {
+      title: 'Discretionary',
+      value: `$${discretionarySpending.toLocaleString()}`,
+      icon: <TrendingUp className="h-5 w-5" />,
+      description: 'Non-essential spending',
+      gradient: 'bg-gradient-to-r from-purple-500 to-pink-500',
+    },
+  ]
+
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {/* 
-      Savings Rate (Taxa de Poupança):
-      A taxa de poupança é a porcentagem da renda que é economizada após todas as despesas. 
-      É uma métrica importante para avaliar a saúde financeira e a capacidade de poupar para o futuro.
-      */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="font-medium text-sm">Savings Rate</CardTitle>
-          <TrendingUp className="h-4 w-4 text-muted-foreground" />
-        </CardHeader>
-        <CardContent>
-          <div className="font-bold text-2xl">{savingsRate.toFixed(2)}%</div>
-          <p className="text-muted-foreground text-xs">Of total income</p>
-        </CardContent>
-      </Card>
-      {/* 
-      Gastos discricionários são despesas não essenciais, como lazer, entretenimento e hobbies. 
-      Monitorar esses gastos ajuda a entender onde o dinheiro está sendo gasto além das necessidades básicas.
-      */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="font-medium text-sm">
-            Discretionary Spending
-          </CardTitle>
-          <BarChart className="h-4 w-4 text-muted-foreground" />
-        </CardHeader>
-        <CardContent>
-          <div className="font-bold text-2xl">
-            ${discretionarySpending.toFixed(2)}
-          </div>
-          <p className="text-muted-foreground text-xs">This month</p>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="font-medium text-sm">
-            Budget Utilization
-          </CardTitle>
-          <Calculator className="h-4 w-4 text-muted-foreground" />
-        </CardHeader>
-        <CardContent>
-          <div className="font-bold text-2xl">
-            {budgetUtilization.toFixed(2)}%
-          </div>
-          <p className="text-muted-foreground text-xs">
-            Of total monthly budget
-          </p>
-        </CardContent>
-      </Card>
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {metrics.map((metric, index) => (
+        <MetricCard key={index} {...metric} />
+      ))}
     </div>
   )
 }

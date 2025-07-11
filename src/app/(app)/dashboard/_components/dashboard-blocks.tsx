@@ -1,9 +1,9 @@
 import type { CategoryBudget } from '@/types/finance'
+import { BudgetRuleOverview } from './budget-rule-overview'
 import { BalanceAreaChart } from './charts/aread-chart'
 import { BudgetBarChart } from './charts/budget-bar-chart'
 import { BudgetPieChart } from './charts/budget-pie-chart'
 import { TrendLineChart } from './charts/trend-line-chart'
-import { BudgetStatusCards } from './componente'
 import { ExpenseRankings } from './expense-ranking'
 import { FinancialMetrics } from './financial-metrics'
 
@@ -12,34 +12,42 @@ interface DashboardProps {
   trendData: { name: string; [key: string]: string | number }[]
   comparisonData: { name: string; planned: number; actual: number }[]
   balanceData: { name: string; balance: number }[]
+  onAdjustBudget?: (category: string, amount: number) => void
 }
 
 export function DashboardBlocks({
   budgets,
   trendData,
   balanceData,
+  onAdjustBudget,
 }: DashboardProps) {
   return (
     <div className="space-y-8">
-      <BudgetStatusCards budgets={budgets} />
+      {/* Financial Metrics Overview */}
+      <FinancialMetrics />
 
-      <div className="flex-1 space-y-4">
-        <FinancialMetrics />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      {/* Budget Rule Overview and Expense Rankings */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <BudgetRuleOverview
+            budgets={budgets}
+            onAdjustBudget={onAdjustBudget}
+          />
+        </div>
+        <div>
           <ExpenseRankings />
-          <BudgetPieChart budgets={budgets} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
+      {/* Charts Section */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <BudgetPieChart budgets={budgets} />
         <BudgetBarChart budgets={budgets} />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
+      {/* Trends and Projections */}
+      <div className="grid gap-6 md:grid-cols-2">
         <TrendLineChart data={trendData} />
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
         <BalanceAreaChart data={balanceData} />
       </div>
     </div>

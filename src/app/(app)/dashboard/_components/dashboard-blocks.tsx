@@ -9,6 +9,7 @@ import { MovingAveragesChart } from './charts/moving-averages-chart'
 import { ExpenseRankings } from './expense-ranking'
 import { FinancialMetrics } from './financial-metrics'
 import { TrendAnalysisPanel } from './trend-analysis-panel'
+import { BudgetComparisonWidgets } from './budget-comparison-widgets'
 
 interface DashboardProps {
   budgets: CategoryBudget[]
@@ -55,6 +56,9 @@ export function DashboardBlocks({
         <TrendLineChart data={trendData} />
         <BalanceAreaChart data={balanceData} />
       </div>
+
+      {/* Budget Comparison Widgets */}
+      <BudgetComparisonWidgets budgets={budgets} />
 
       {/* Advanced Trend Analysis */}
       <div className="grid gap-6 md:grid-cols-2">

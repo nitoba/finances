@@ -125,6 +125,7 @@ export function Dashboard() {
           balanceData={balanceData}
           budgets={calculateCategoryBudgets(distribution, filteredExpenses)}
           comparisonData={comparisonData}
+          expenses={filteredExpenses}
           onAdjustBudget={(_category, _amount) => {
             // TODO: Implement actual budget adjustment logic
           }}
